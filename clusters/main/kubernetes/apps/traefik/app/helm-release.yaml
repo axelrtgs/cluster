@@ -1,0 +1,84 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: traefik
+    namespace: traefik
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: traefik
+            version: 27.0.14
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+            interval: 15m
+    timeout: 20m
+    maxHistory: 3
+    install:
+      createNamespace: true
+      remediation:
+        retries: 3
+    upgrade:
+      cleanupOnFail: true
+      remediation:
+        retries: 3
+    uninstall:
+      keepHistory: false
+    releaseName: traefik
+    values:
+        TZ: America/Montreal
+        # additionalArguments:
+        #     - --serverstransport.insecureskipverify=true
+        #     - --providers.kubernetesingress.allowexternalnameservices=true
+        # ingressRoute:
+        #     dashboard:
+        #         enabled: true
+        # operator:
+        #     register: true
+        service:
+            main:
+                enabled: true
+                loadBalancerIP: ${TRAEFIK_IP}
+                # ports:
+                #     main:
+                #         forwardedHeaders:
+                #             enabled: false
+                #         port: 9000
+                #         protocol: http
+                #         proxyProtocol:
+                #             enabled: false
+                #         targetPort: 9000
+                type: LoadBalancer
+            tcp:
+                enabled: true
+                externalTrafficPolicy: Cluster
+                loadBalancerIP: ${TRAEFIK_IP}
+                ports:
+                    web:
+                        enabled: true
+                        forwardedHeaders:
+                            enabled: false
+                            insecureMode: false
+                        port: 80
+                        protocol: http
+                        proxyProtocol:
+                            enabled: false
+                            insecureMode: false
+                        redirectTo: websecure
+                    websecure:
+                        enabled: true
+                        forwardedHeaders:
+                            enabled: false
+                            insecureMode: false
+                        port: 443
+                        protocol: https
+                        proxyProtocol:
+                            enabled: false
+                            insecureMode: false
+                        tls:
+                            enabled: true
+                type: LoadBalancer

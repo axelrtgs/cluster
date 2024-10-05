@@ -1,0 +1,13 @@
+age.agekey
+^clustertool.exe
+^clustertool*
+^clustertool
+*clustertool.exe
+clustertool.exe
+clustertool
+sopssecret.yaml
+sopssecret*
+*sopssecret*
+.DS_Store
+truenas_exports/
+temp_charts/
