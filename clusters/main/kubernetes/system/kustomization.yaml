@@ -16,3 +16,4 @@ resources:
   - topolvm/ks.yaml
   - traefik-crds/ks.yaml
   - volsync/ks.yaml
+  - spegel/ks.yaml
