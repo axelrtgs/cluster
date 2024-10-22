@@ -1,38 +1,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - kubernetes-dashboard/ks.yaml
-  - authelia/ks.yaml
   - bazarr/ks.yaml
-  - blocky/ks.yaml
-  - cert-manager/ks.yaml
   - cloudflared/ks.yaml
   - cloudflareddns/ks.yaml
-  - cloudnative-pg/ks.yaml
   - clusterissuer/ks.yaml
   - external-service/ks.yaml
   - flaresolverr/ks.yaml
-  - grafana/ks.yaml
   - kometa/ks.yaml
+  - kubernetes-dashboard/ks.yaml
   - lead-ai/ks.yaml
-  - lldap/ks.yaml
-  - mealie/ks.yaml
-  - metallb/ks.yaml
-  - metallb-config/ks.yaml
-  - openebs/ks.yaml
   - overseerr/ks.yaml
-  - plex/ks.yaml
   - prometheus/ks.yaml
-  - prometheus-operator/ks.yaml
-  - prowlarr/ks.yaml
   - qbittorrent/ks.yaml
   - radarr/ks.yaml
   - recyclarr/ks.yaml
   - sabnzbd/ks.yaml
-  - scrypted/ks.yaml
   - sonarr/ks.yaml
   - sonarr-kevin/ks.yaml
   - tautulli/ks.yaml
-  - teslamate/ks.yaml
   - traefik/ks.yaml
-  - volsync/ks.yaml
