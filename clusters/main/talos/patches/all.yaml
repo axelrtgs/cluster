@@ -1,3 +1,7 @@
+cluster:
+  proxy:
+    disabled: true
+
 machine:
   time:
     disabled: false
@@ -52,6 +56,7 @@ machine:
   files:
     - path: "/etc/cri/conf.d/20-customization.part"
       permissions: 0
+      op: "create"
       content: |
         [plugins."io.containerd.grpc.v1.cri"]
           enable_unprivileged_ports = true
@@ -63,6 +68,7 @@ machine:
 
     - path: "/etc/nfsmount.conf"
       permissions: 420
+      op: "overwrite"
       content: |
         [ NFSMount_Global_Options ]
         nfsvers=4.2
@@ -72,54 +78,5 @@ machine:
         rsize=131072
         wsize=131072
         nconnect=8
-
-  registries:
-    config:
 # No DockerHub credentials provided
-    # No Spegel_IP provide
-    mirrors:
-      cgr.dev:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      docker.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      ghcr.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      quay.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      mcr.microsoft.com:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      public.ecr.aws:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      gcr.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      registry.k8s.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      k8s.gcr.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      tccr.io:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-      factory.talos.dev:
-        endpoints:
-          - http://127.0.0.1:30020
-          - http://127.0.0.1:30021
-
+    

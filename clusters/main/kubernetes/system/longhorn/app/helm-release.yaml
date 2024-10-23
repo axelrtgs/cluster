@@ -10,7 +10,7 @@ spec:
         spec:
 
             chart: longhorn
-            version: 1.7.1
+            version: 1.7.2
             sourceRef:
                 kind: HelmRepository
                 name: longhorn
@@ -24,7 +24,7 @@ spec:
         crds: CreateReplace
         remediation:
             retries: 3
-    values: 
+    values:
       defaultSettings:
         # Increase to 3 for a multi-node cluster
         defaultReplicaCount: 1
