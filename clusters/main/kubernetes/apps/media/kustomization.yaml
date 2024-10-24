@@ -19,3 +19,4 @@ resources:
   - sonarr/ks.yaml
   - sonarr-kevin/ks.yaml
   - tautulli/ks.yaml
+  - prowlarr/ks.yaml
