@@ -1,17 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - authelia/ks.yaml
   - cloudflared/ks.yaml
   - cloudflareddns/ks.yaml
   - clusterissuer/ks.yaml
   - external-service/ks.yaml
-  - kubernetes-dashboard/ks.yaml
-  - lead-ai/ks.yaml
-  - media
-  - prometheus/ks.yaml
-  - traefik/ks.yaml
-  - authelia/ks.yaml
   - grafana/ks.yaml
+  - kubernetes-dashboard/ks.yaml
   - lldap/ks.yaml
   - mealie/ks.yaml
+  - media
+  - prometheus/ks.yaml
   - teslamate/ks.yaml
+  - traefik/ks.yaml

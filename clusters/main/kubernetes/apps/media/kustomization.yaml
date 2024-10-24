@@ -10,6 +10,8 @@ resources:
   - media-nfs-pvc.yaml
   - media-tv-nfs-pvc.yaml
   - overseerr/ks.yaml
+  - plex/ks.yaml
+  - plex-certs-nfs-pvc.yaml
   - qbittorrent/ks.yaml
   - radarr/ks.yaml
   - recyclarr/ks.yaml
@@ -17,5 +19,3 @@ resources:
   - sonarr/ks.yaml
   - sonarr-kevin/ks.yaml
   - tautulli/ks.yaml
-  - plex-certs-nfs-pvc.yaml
-  - plex/ks.yaml
