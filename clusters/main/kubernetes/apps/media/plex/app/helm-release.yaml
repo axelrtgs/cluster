@@ -1,0 +1,99 @@
+metadata:
+    name: plex
+    namespace: media
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: plex
+            version: 18.0.12
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: plex
+    values:
+        TZ: America/Montreal
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: plex.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: false
+        persistence:
+            config:
+                enabled: true
+                mountPath: /config
+                readOnly: false
+                size: 356Gi
+                volsync:
+                    - credentials: s3
+                      dest:
+                        enabled: true
+                      name: s3
+                      src:
+                        enabled: true
+                      type: restic
+            transcode:
+                enabled: true
+                medium: Memory
+                mountPath: /transcode
+                targetSelectAll: true
+                type: emptyDir
+            media:
+                enabled: true
+                existingClaim: media-nfs-pvc
+                targetSelector:
+                    main:
+                        main:
+                            mountPath: /media
+            plex-certs:
+                enabled: true
+                existingClaim: plex-certs-nfs-pvc
+                targetSelector:
+                    main:
+                        main:
+                            mountPath: /cert
+        plex:
+            additionalAdvertiseURL: https://plex.${BASE_DOMAIN}:${PLEX_PORT}
+            disableGDM: true
+            requireHTTPS: true
+            serverIP: ${PLEX_IP}
+        service:
+            main:
+                enabled: true
+                loadBalancerIP: ${PLEX_IP}
+                ports:
+                    main:
+                        port: 32400
+                        protocol: http
+                        targetPort: 32400
+                type: LoadBalancer
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                ALLOWED_NETWORKS: 172.16.0.0/12,10.0.0.0/8,192.168.0.0/16
+                                PLEX_CLAIM: ${PLEX_CLAIM}
+                                PLEX_PREFERENCE_GDM: GdmEnabled={{ ternary "0" "1" .Values.plex.disableGDM }}
+                                PLEX_PREFERENCE_SEC_CON: secureConnections={{ ternary "0" "1" .Values.plex.requireHTTPS }}

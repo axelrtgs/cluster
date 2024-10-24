@@ -1,0 +1,91 @@
+metadata:
+    name: grafana
+    namespace: grafana
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: grafana
+            version: 16.0.3
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: grafana
+    values:
+        TZ: America/Montreal
+        cnpg:
+            main:
+                backups:
+                    credentials: s3
+                    enabled: true
+                    retentionPolicy: ""
+                    revision: 1
+                cluster:
+                    instances: 1
+                    singleNode: true
+                database: grafana
+                enabled: true
+                hibernate: false
+                mode: recovery
+                monitoring:
+                    disableDefaultQueries: false
+                    enablePodMonitor: true
+                password: PLACEHOLDERPASSWORD
+                pgVersion: 16
+                pooler:
+                    enabled: false
+                recovery:
+                    enabled: true
+                    revision: ""
+                    serverName: ""
+                user: grafana
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: grafana.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            data:
+                enabled: true
+                mountPath: /var/lib/grafana
+                readOnly: false
+                storageClass: ""
+                volsync:
+                    - credentials: s3
+                      dest:
+                        enabled: false
+                      name: s3
+                      src:
+                        enabled: true
+                      type: restic
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_USER}
+                                GF_SECURITY_ADMIN_USER: ${GRAFANA_PASSWORD}

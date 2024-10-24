@@ -10,3 +10,8 @@ resources:
   - media
   - prometheus/ks.yaml
   - traefik/ks.yaml
+  - authelia/ks.yaml
+  - grafana/ks.yaml
+  - lldap/ks.yaml
+  - mealie/ks.yaml
+  - teslamate/ks.yaml

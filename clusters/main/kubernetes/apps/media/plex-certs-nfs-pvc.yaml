@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: media-movies-nfs-pv
+  name: plex-certs-nfs-pv
   namespace: media
 spec:
-  storageClassName: media-movies-nfs
+  storageClassName: plex-certs-nfs
   capacity:
     storage: 1Mi
   accessModes:
@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${TRUENAS_IP}
-    path: /mnt/main/media/movies
+    path: /mnt/NVMe/plex-certs
   mountOptions:
     - nfsvers=4
     - tcp
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: media-movies-nfs-pvc
+  name: plex-certs-nfs-pvc
   namespace: media
 spec:
-  storageClassName: media-movies-nfs
+  storageClassName: plex-certs-nfs
   accessModes:
     - ReadWriteMany
   resources:

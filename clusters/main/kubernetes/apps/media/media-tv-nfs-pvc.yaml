@@ -5,7 +5,7 @@ metadata:
   name: media-tv-nfs-pv
   namespace: media
 spec:
-  storageClassName: media-nfs
+  storageClassName: media-tv-nfs
   capacity:
     storage: 1Mi
   accessModes:
@@ -29,7 +29,7 @@ metadata:
   name: media-tv-nfs-pvc
   namespace: media
 spec:
-  storageClassName: media-nfs
+  storageClassName: media-tv-nfs
   accessModes:
     - ReadWriteMany
   resources:

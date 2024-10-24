@@ -1,0 +1,79 @@
+metadata:
+    name: teslamate
+    namespace: teslamate
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: teslamate
+            version: 1.0.7
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: teslamate
+    values:
+        TZ: America/Montreal
+        cnpg:
+            main:
+                backups:
+                    credentials: s3
+                    enabled: true
+                    retentionPolicy: ""
+                    revision: 1
+                cluster:
+                    initdb:
+                        postInitApplicationSQL:
+                            - ALTER USER teslamate WITH SUPERUSER
+                    instances: 1
+                    singleNode: true
+                database: teslamate
+                enabled: true
+                hibernate: false
+                mode: recovery
+                monitoring:
+                    disableDefaultQueries: false
+                    enablePodMonitor: true
+                password: PLACEHOLDERPASSWORD
+                pgVersion: 16
+                pooler:
+                    enabled: false
+                recovery:
+                    enabled: true
+                    revision: ""
+                    serverName: ""
+                user: teslamate
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: teslamate.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                ENCRYPTION_KEY: ${TESLAMATE_ENCRYPTION_KEY}

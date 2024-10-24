@@ -108,5 +108,5 @@ spec:
                       type: restic
         qbitportforward:
             QBT_PASSWORD: ${QBT_PASSWORD}
-            QBT_USERNAME: ${QBIT_USERNAME}
+            QBT_USERNAME: ${QBT_USERNAME}
             enabled: true

@@ -1,0 +1,94 @@
+metadata:
+    name: lldap
+    namespace: lldap
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: lldap
+            version: 6.0.9
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: lldap
+    values:
+        TZ: America/Montreal
+        cnpg:
+            main:
+                backups:
+                    credentials: s3
+                    enabled: true
+                    retentionPolicy: ""
+                    revision: 1
+                cluster:
+                    instances: 2
+                    singleNode: true
+                database: lldap
+                enabled: true
+                hibernate: false
+                mode: recovery
+                monitoring:
+                    disableDefaultQueries: false
+                    enablePodMonitor: true
+                password: PLACEHOLDERPASSWORD
+                pgVersion: 16
+                pooler:
+                    enabled: false
+                recovery:
+                    enabled: true
+                    revision: ""
+                    serverName: ""
+                user: lldap
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: ldap.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            data:
+                enabled: true
+                mountPath: /data
+                readOnly: false
+                storageClass: ""
+                volsync:
+                    - credentials: s3
+                      dest:
+                        enabled: true
+                      name: s3
+                      src:
+                        enabled: true
+                      type: restic
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                LLDAP_HTTP_URL: https://ldap.${BASE_DOMAIN}
+                                LLDAP_LDAP_BASE_DN: ${LLDAP_LDAP_BASE_DN}
+                                LLDAP_LDAP_USER_DN: ${LLDAP_LDAP_USER_DN}
+                                LLDAP_LDAP_USER_EMAIL: ${LLDAP_LDAP_USER_EMAIL}
+                                LLDAP_LDAP_USER_PASS: ${LLDAP_LDAP_USER_PASS}

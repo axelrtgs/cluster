@@ -1,0 +1,202 @@
+metadata:
+    name: authelia
+    namespace: authelia
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: authelia
+            version: 24.1.4
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: authelia
+    values:
+        TZ: America/Montreal
+        access_control:
+            default_policy: two_factor
+            rules:
+                - domain:
+                    - auth.${BASE_DOMAIN}
+                  domain_regex: []
+                  networks: []
+                  policy: bypass
+                  resources: []
+                  subject: []
+                - domain:
+                    - ${BASE_DOMAIN}
+                  domain_regex: []
+                  networks: []
+                  policy: two_factor
+                  resources: []
+                  subject:
+                    - group:users
+        authentication_backend:
+            disable_reset_password: true
+            file:
+                enabled: false
+                password:
+                    algorithm: argon2id
+                    iterations: 1
+                    key_length: 32
+                    memory: 1024
+                    parallelism: 8
+                    salt_length: 16
+                path: /config/users_database.yml
+            ldap:
+                additional_groups_dn: OU=Groups
+                additional_users_dn: OU=people
+                base_dn: ${LLDAP_LDAP_BASE_DN}
+                display_name_attribute: displayName
+                enabled: true
+                group_name_attribute: cn
+                groups_filter: (member={dn})
+                implementation: custom
+                mail_attribute: mail
+                plain_password: ${LLDAP_LDAP_USER_PASS}
+                start_tls: false
+                timeout: 5s
+                tls:
+                    minimum_version: TLS1.2
+                    server_name: ""
+                    skip_verify: false
+                url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
+                user: uid=ldap,ou=people,${LLDAP_LDAP_BASE_DN}
+                username_attribute: uid
+                users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
+            refresh_interval: 5m
+        cnpg:
+            main:
+                backups:
+                    credentials: s3
+                    enabled: true
+                    retentionPolicy: ""
+                    revision: 1
+                cluster:
+                    instances: 1
+                    singleNode: true
+                database: authelia
+                enabled: true
+                hibernate: false
+                mode: recovery
+                monitoring:
+                    disableDefaultQueries: false
+                    enablePodMonitor: true
+                password: PLACEHOLDERPASSWORD
+                pgVersion: 16
+                pooler:
+                    enabled: false
+                recovery:
+                    enabled: true
+                    revision: ""
+                    serverName: ""
+                user: authelia
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        default_redirection_url: https://auth.${BASE_DOMAIN}
+        domain: ${BASE_DOMAIN}
+        identity_providers:
+            oidc:
+                access_token_lifespan: 1h
+                authorize_code_lifespan: 1m
+                clients:
+                    - audience: []
+                      authorization_policy: two_factor
+                      consent_mode: implicit
+                      description: Cloudflare Access
+                      grant_types:
+                        - authorization_code
+                      id: ${AUTHELIA_CLOUDFLARE_ID}
+                      pkce_challange_method: S256
+                      public: false
+                      redirect_uris:
+                        - ${AUTHELIA_CLOUDFLARE_REDIRECT_URI}
+                      require_pkce: true
+                      response_modes:
+                        - form_post
+                      response_types:
+                        - code
+                      scopes:
+                        - openid
+                        - profile
+                        - email
+                        - groups
+                      secret: ${AUTHELIA_CLOUDFLARE_SECRET}
+                      token_endpoint_auth_method: client_secret_basic
+                      userinfo_signing_algorithm: RS256
+                enable_client_debug_messages: true
+                enabled: true
+                id_token_lifespan: 1h
+                minimum_parameter_entropy: 8
+                refresh_token_lifespan: 90m
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: auth.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+                required: true
+            smtp:
+                disable_html_emails: false
+                disable_require_tls: false
+                enabled: true
+                enabledSecret: false
+                host: ${SMTP_HOST}
+                identifier: localhost
+                plain_password: ${SMTP_PASSWORD}
+                port: ${SMTP_PORT}
+                sender: ${SMTP_FROM}
+                startup_check_address: ${SMTP_FROM}
+                subject: '[Authelia] {title}'
+                timeout: 5s
+                tls:
+                    minimum_version: TLS1.2
+                    server_name: ""
+                    skip_verify: false
+                username: ${SMTP_USER}
+        persistence:
+            config:
+                enabled: true
+                mountPath: /config
+                readOnly: false
+                volsync:
+                    - credentials: s3
+                      dest:
+                        enabled: true
+                      name: s3
+                      src:
+                        enabled: true
+                      type: restic
+        # server:
+        #     read_buffer_size: 8192
+        #     write_buffer_size: 8192
+        session:
+            expiration: 1h
+            inactivity: 5m
+            name: authelia_session
+            remember_me_duration: 5M
+            same_site: lax
+        totp:
+            issuer: ${BASE_DOMAIN}
+            period: 30
+            skew: 1
