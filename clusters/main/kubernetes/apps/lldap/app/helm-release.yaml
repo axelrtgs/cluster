@@ -24,7 +24,7 @@ spec:
                     credentials: s3
                     enabled: true
                     retentionPolicy: ""
-                    revision: 1
+                    revision: "1"
                 cluster:
                     instances: 2
                     singleNode: true

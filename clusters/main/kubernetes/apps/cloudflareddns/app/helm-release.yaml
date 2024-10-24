@@ -44,23 +44,7 @@ spec:
             interval: 300
             log_level: 3
             user: ${MAIN_EMAIL}
-        credentials:
-            s3:
-                type: s3
-                url: "${S3URL}"
-                bucket: "${S3BUCKET}"
-                accessKey: "${S3ID}"
-                secretKey: "${S3KEY}"
-                encrKey: "${S3ENCRKEY}"
         persistence:
             config:
                 enabled: true
                 mountPath: /config
-                volsync:
-                    - credentials: s3
-                      dest:
-                        enabled: true
-                      name: s3
-                      src:
-                        enabled: true
-                      type: restic
