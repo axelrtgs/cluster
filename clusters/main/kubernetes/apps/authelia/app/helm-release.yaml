@@ -160,24 +160,24 @@ spec:
                         entrypoints:
                             - websecure
                 required: true
-            smtp:
-                disable_html_emails: false
-                disable_require_tls: false
-                enabled: true
-                enabledSecret: false
-                host: ${SMTP_HOST}
-                identifier: localhost
-                plain_password: ${SMTP_PASSWORD}
-                port: ${SMTP_PORT}
-                sender: ${SMTP_FROM}
-                startup_check_address: ${SMTP_FROM}
-                subject: '[Authelia] {title}'
-                timeout: 5s
-                tls:
-                    minimum_version: TLS1.2
-                    server_name: ""
-                    skip_verify: false
-                username: ${SMTP_USER}
+        smtp:
+            disable_html_emails: false
+            disable_require_tls: false
+            enabled: true
+            enabledSecret: false
+            host: ${SMTP_HOST}
+            identifier: localhost
+            plain_password: ${SMTP_PASSWORD}
+            port: ${SMTP_PORT}
+            sender: ${SMTP_FROM}
+            startup_check_address: ${SMTP_FROM}
+            subject: '[Authelia] {title}'
+            timeout: 5s
+            tls:
+                minimum_version: TLS1.2
+                server_name: ""
+                skip_verify: false
+            username: ${SMTP_USER}
         persistence:
             config:
                 enabled: true

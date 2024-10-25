@@ -34,21 +34,11 @@ spec:
         addons:
             vpn:
                 env:
-                    OPENVPN_PASSWORD:
-                        name: OPENVPN_PASSWORD
-                        value: ${VPN_PASSWORD}
-                    OPENVPN_USER:
-                        name: OPENVPN_USER
-                        value: ${VPN_USER}
-                    SERVER_REGIONS:
-                        name: SERVER_REGIONS
-                        value: ${VPN_SERVER_REGIONS}
-                    VPN_PORT_FORWARDING:
-                        name: VPN_PORT_FORWARDING
-                        value: ${VPN_PORT_FORWARDING}
-                    VPN_SERVICE_PROVIDER:
-                        name: VPN_SERVICE_PROVIDER
-                        value: ${VPN_SERVICE_PROVIDER}
+                    OPENVPN_PASSWORD: ${VPN_PASSWORD}
+                    OPENVPN_USER: ${VPN_USER}
+                    SERVER_REGIONS: ${VPN_SERVER_REGIONS}
+                    VPN_PORT_FORWARDING: ${VPN_PORT_FORWARDING}
+                    VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
                 excludedNetworks_IPv4:
                     - ${VPN_EXCLUDED_NETWORK}
                 killSwitch: true
@@ -106,7 +96,7 @@ spec:
                       src:
                         enabled: true
                       type: restic
-        # qbitportforward:
-        #     QBT_PASSWORD: ${QBT_PASSWORD}
-        #     QBT_USERNAME: ${QBT_USERNAME}
-        #     enabled: true
+        qbitportforward:
+            QBT_PASSWORD: ${QBT_PASSWORD}
+            QBT_USERNAME: ${QBT_USERNAME}
+            enabled: true
