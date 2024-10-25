@@ -96,6 +96,14 @@ spec:
                       src:
                         enabled: true
                       type: restic
+        securityContext:
+            container:
+                capabilities:
+                    add:
+                        - NET_ADMIN
+                        - NET_RAW
+                    drop:
+                        - ALL
         qbitportforward:
             QBT_PASSWORD: ${QBT_PASSWORD}
             QBT_USERNAME: ${QBT_USERNAME}
