@@ -146,8 +146,8 @@ spec:
                 hosts:
                     - host: auth.${BASE_DOMAIN}
                       paths:
-                        - path: /
-                          pathType: Prefix
+                          - path: /
+                            pathType: Prefix
                 integrations:
                     certManager:
                         certificateIssuer: cloudflare
