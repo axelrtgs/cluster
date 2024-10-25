@@ -94,7 +94,7 @@ spec:
                 recovery:
                     enabled: true
                     revision: ""
-                    serverName: ""
+                    credentials: s3
                 user: authelia
         credentials:
             s3:

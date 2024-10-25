@@ -42,7 +42,7 @@ spec:
                 recovery:
                     enabled: true
                     revision: ""
-                    serverName: ""
+                    credentials: s3
                 user: lldap
         credentials:
             s3:

@@ -106,7 +106,7 @@ spec:
                       src:
                         enabled: true
                       type: restic
-        qbitportforward:
-            QBT_PASSWORD: ${QBT_PASSWORD}
-            QBT_USERNAME: ${QBT_USERNAME}
-            enabled: true
+        # qbitportforward:
+        #     QBT_PASSWORD: ${QBT_PASSWORD}
+        #     QBT_USERNAME: ${QBT_USERNAME}
+        #     enabled: true
