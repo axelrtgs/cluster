@@ -71,6 +71,25 @@ spec:
                       src:
                         enabled: true
                       type: restic
+
+        service:
+            main:
+                enabled: true
+                loadBalancerIP: ${SCRYPTED_IP}
+                ports:
+                    main:
+                        port: 10611
+                        protocol: tcp
+                        targetPort: 10611
+                    mdns:
+                        port: 5353
+                        protocol: udp
+                        targetPort: 5353
+                    homekit:
+                        port: 36515
+                        protocol: tcp
+                        targetPort: 36515
+                type: LoadBalancer
         workload:
             main:
                 podSpec:
