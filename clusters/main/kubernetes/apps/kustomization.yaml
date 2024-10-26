@@ -7,10 +7,10 @@ resources:
   - clusterissuer/ks.yaml
   - external-service/ks.yaml
   - grafana/ks.yaml
-  - kubernetes-dashboard/ks.yaml
   - lldap/ks.yaml
   - mealie/ks.yaml
   - media
   - prometheus/ks.yaml
   - teslamate/ks.yaml
   - traefik/ks.yaml
+  - kubernetes-dashboard/ks.yaml
