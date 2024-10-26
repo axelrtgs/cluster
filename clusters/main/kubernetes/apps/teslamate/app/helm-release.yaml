@@ -10,7 +10,7 @@ spec:
     chart:
         spec:
             chart: teslamate
-            version: 1.0.7
+            version: 2.3.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
