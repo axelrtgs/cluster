@@ -79,15 +79,15 @@ spec:
                 ports:
                     main:
                         port: 10611
-                        protocol: TCP
+                        protocol: tcp
                         targetPort: 10611
                     mdns:
                         port: 5353
-                        protocol: TCP
+                        protocol: tcp
                         targetPort: 5353
                     homekit:
                         port: 36515
-                        protocol: TCP
+                        protocol: tcp
                         targetPort: 36515
                 type: LoadBalancer
         workload:
