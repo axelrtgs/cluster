@@ -31,27 +31,27 @@ spec:
     releaseName: traefik
     values:
         TZ: America/Montreal
-        # additionalArguments:
-        #     - --serverstransport.insecureskipverify=true
-        #     - --providers.kubernetesingress.allowexternalnameservices=true
-        # ingressRoute:
-        #     dashboard:
-        #         enabled: true
-        # operator:
-        #     register: true
+        additionalArguments:
+            - --serverstransport.insecureskipverify=true
+            - --providers.kubernetesingress.allowexternalnameservices=true
+        ingressRoute:
+            dashboard:
+                enabled: true
+        operator:
+            register: true
         service:
             main:
                 enabled: true
                 loadBalancerIP: ${TRAEFIK_IP}
-                # ports:
-                #     main:
-                #         forwardedHeaders:
-                #             enabled: false
-                #         port: 9000
-                #         protocol: http
-                #         proxyProtocol:
-                #             enabled: false
-                #         targetPort: 9000
+                ports:
+                    main:
+                        forwardedHeaders:
+                            enabled: false
+                        port: 9000
+                        protocol: http
+                        proxyProtocol:
+                            enabled: false
+                        targetPort: 9000
                 type: LoadBalancer
             tcp:
                 enabled: true

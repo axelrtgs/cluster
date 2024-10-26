@@ -1,0 +1,83 @@
+metadata:
+    name: scrypted
+    namespace: scrypted
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: scrypted
+            version: 5.1.2
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: scrypted
+    values:
+        TZ: America/Montreal
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: scrypted.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: cloudflare
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            server:
+                enabled: true
+                mountPath: /server/volume
+                readOnly: false
+                volsync:
+                    - credentials: s3
+                      dest:
+                        enabled: true
+                      name: s3
+                      src:
+                        enabled: true
+                      type: restic
+
+        service:
+            main:
+                enabled: true
+                loadBalancerIP: ${SCRYPTED_IP}
+                ports:
+                    main:
+                        port: 10611
+                        protocol: TCP
+                        targetPort: 10611
+                    mdns:
+                        port: 5353
+                        protocol: TCP
+                        targetPort: 5353
+                    homekit:
+                        port: 36515
+                        protocol: TCP
+                        targetPort: 36515
+                type: LoadBalancer
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                SCRYPTED_WEBHOOK_UPDATE: ${SCRYPTED_WEBHOOK_UPDATE}
+                                SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION: ${SCRYPTED_WEBHOOK_UPDATE_AUTHORIZATION}

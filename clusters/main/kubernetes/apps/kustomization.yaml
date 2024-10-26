@@ -15,3 +15,4 @@ resources:
   - prometheus/ks.yaml
   - teslamate/ks.yaml
   - traefik/ks.yaml
+  - scrypted/ks.yaml
