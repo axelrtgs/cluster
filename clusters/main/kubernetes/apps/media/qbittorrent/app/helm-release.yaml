@@ -29,6 +29,17 @@ spec:
     uninstall:
       keepHistory: false
     releaseName: qbittorrent
+    postRenderers:
+        - kustomize:
+            patches:
+              - target:
+                  version: v1
+                  kind: Deployment
+                  name: qbittorrent
+                patch: |
+                  - op: add
+                    path: /spec/template/spec/containers/1/resources/limits/squat.ai~1tun
+                    value: 1
     values:
         TZ: America/Montreal
         addons:
@@ -96,14 +107,6 @@ spec:
                       src:
                         enabled: true
                       type: restic
-        securityContext:
-            container:
-                capabilities:
-                    add:
-                        - NET_ADMIN
-                        - NET_RAW
-                    drop:
-                        - ALL
         qbitportforward:
             QBT_PASSWORD: ${QBT_PASSWORD}
             QBT_USERNAME: ${QBT_USERNAME}
