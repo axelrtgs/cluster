@@ -9,7 +9,3 @@ sopssecret.yaml
 sopssecret*
 *sopssecret*
 .DS_Store
-
-temp_charts/
-
-truenas_exports/
