@@ -76,6 +76,13 @@ spec:
                     main:
                         main:
                             mountPath: /cert
+        resources:
+            limits:
+                cpu: 32000m
+                memory: 16Gi
+            requests:
+                cpu: 2000m
+                memory: 2Gi
         plex:
             additionalAdvertiseURL: https://plex.${BASE_DOMAIN}:${PLEX_PORT}
             disableGDM: true
