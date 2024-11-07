@@ -3,11 +3,5 @@
   "extends": [
     "config:recommended",
     "github>truecharts/public//.github/renovate/main.json5"
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["*"],
-      "ignoreTests": true
-    }
   ]
 }

@@ -62,7 +62,7 @@ spec:
                           pathType: Prefix
                 integrations:
                     certManager:
-                        certificateIssuer: cloudflare
+                        certificateIssuer: domain-0-le-prod
                         enabled: true
                     homepage:
                         enabled: false
