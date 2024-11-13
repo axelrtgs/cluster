@@ -82,13 +82,13 @@ spec:
                     admin_group: lldap_admin
                     auth_enabled: true
                     auto_redirect: true
-                    client_id: mealie
+                    client_id: ${AUTHELIA_MEALIE_ID}
                     configuration_url: https://auth.${BASE_DOMAIN}/.well-known/openid-configuration
                     provider_name: OAuth
                     remember_me: true
                     signup_enabled: true
                     user_group: "users"
-                    OIDC_CLIENT_SECRET: ${AUTHELIA_MEALIE_SECRET}
+                    OIDC_CLIENT_SECRET: ${AUTHELIA_MEALIE_SECRET_PLAIN}
                 openai:
                     OPENAI_API_KEY: ${OPENAI_API_KEY}
                 smtp:
