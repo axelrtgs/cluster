@@ -135,9 +135,9 @@ spec:
                       secret: ${AUTHELIA_CLOUDFLARE_SECRET}
                       token_endpoint_auth_method: client_secret_basic
                       userinfo_signing_algorithm: RS256
-                    - client_id: mealie
-                      client_name: Mealie
-                      client_secret: ${AUTHELIA_MEALIE_SECRET}
+                    - id: mealie
+                      description: Mealie
+                      secret: ${AUTHELIA_MEALIE_SECRET}
                       token_endpoint_auth_method: client_secret_basic
                       authorization_policy: two_factor
                       consent_mode: implicit
