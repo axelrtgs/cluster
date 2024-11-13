@@ -135,6 +135,25 @@ spec:
                       secret: ${AUTHELIA_CLOUDFLARE_SECRET}
                       token_endpoint_auth_method: client_secret_basic
                       userinfo_signing_algorithm: RS256
+                    - client_id: mealie
+                      client_name: Mealie
+                      client_secret: ${AUTHELIA_MEALIE_SECRET}
+                      token_endpoint_auth_method: client_secret_basic
+                      authorization_policy: two_factor
+                      consent_mode: implicit
+                      redirect_uris:
+                        - 'https://mealie.${BASE_DOMAIN}/login'
+                      public: false
+                      require_pkce: true
+                      pkce_challenge_method: S256
+                      grant_types:
+                        - authorization_code
+                      scopes:
+                        - openid
+                        - profile
+                        - groups
+                        - email
+
                 enable_client_debug_messages: true
                 enabled: true
                 id_token_lifespan: 1h

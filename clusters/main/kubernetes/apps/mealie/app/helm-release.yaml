@@ -87,7 +87,10 @@ spec:
                     provider_name: OAuth
                     remember_me: true
                     signup_enabled: true
-                    user_group: ""
+                    user_group: "users"
+                    OIDC_CLIENT_SECRET: ${AUTHELIA_MEALIE_SECRET}
+                openai:
+                    OPENAI_API_KEY: ${OPENAI_API_KEY}
                 smtp:
                     auth_strategy: ${SMTP_AUTH_STRATEGY}
                     from_email: ${SMTP_FROM}
