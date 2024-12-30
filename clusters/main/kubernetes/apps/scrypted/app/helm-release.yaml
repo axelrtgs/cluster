@@ -10,7 +10,7 @@ spec:
     chart:
         spec:
             chart: scrypted
-            version: 6.20.2
+            version: 6.21.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
