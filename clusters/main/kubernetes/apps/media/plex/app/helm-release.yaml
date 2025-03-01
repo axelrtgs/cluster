@@ -79,10 +79,10 @@ spec:
         resources:
             limits:
                 cpu: 32000m
-                memory: 16Gi
+                memory: 64Gi
             requests:
                 cpu: 2000m
-                memory: 2Gi
+                memory: 8Gi
         plex:
             additionalAdvertiseURL: https://plex.${BASE_DOMAIN}:${PLEX_PORT}
             disableGDM: true
