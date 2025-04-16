@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -18,58 +17,100 @@ spec:
     releaseName: authelia
     values:
         TZ: America/Montreal
-        access_control:
-            default_policy: two_factor
-            rules:
-                - domain:
-                    - auth.${BASE_DOMAIN}
-                  domain_regex: []
-                  networks: []
-                  policy: bypass
-                  resources: []
-                  subject: []
-                - domain:
-                    - ${BASE_DOMAIN}
-                  domain_regex: []
-                  networks: []
-                  policy: two_factor
-                  resources: []
-                  subject:
-                    - group:users
-        authentication_backend:
-            disable_reset_password: true
-            file:
-                enabled: false
-                password:
-                    algorithm: argon2id
-                    iterations: 1
-                    key_length: 32
-                    memory: 1024
-                    parallelism: 8
-                    salt_length: 16
-                path: /config/users_database.yml
-            ldap:
-                additional_groups_dn: OU=Groups
-                additional_users_dn: OU=people
-                base_dn: ${LLDAP_LDAP_BASE_DN}
-                display_name_attribute: displayName
-                enabled: true
-                group_name_attribute: cn
-                groups_filter: (member={dn})
-                implementation: custom
-                mail_attribute: mail
-                plain_password: ${LLDAP_LDAP_USER_PASS}
-                start_tls: false
-                timeout: 5s
-                tls:
-                    minimum_version: TLS1.2
-                    server_name: ""
-                    skip_verify: false
-                url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
-                user: uid=ldap,ou=people,${LLDAP_LDAP_BASE_DN}
-                username_attribute: uid
-                users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
-            refresh_interval: 5m
+        domain: ${BASE_DOMAIN}
+        authelia:
+            server:
+                buffers:
+                    read: 8192
+                    write: 8192
+            session:
+                expiration: 1h
+                inactivity: 5m
+                name: authelia_session
+                remember_me: 5M
+                same_site: lax
+                cookies:
+                    - domain: auth.${BASE_DOMAIN}
+                      authelia_url: https://auth.${BASE_DOMAIN}
+            totp:
+                issuer: ${BASE_DOMAIN}
+                period: 30
+                skew: 1
+            webauthn:
+                disable: false
+                enable_passkey_login: false
+            notifier:
+                smtp:
+                    address: ${SMTP_HOST}:${SMTP_PORT}
+                    username: ${SMTP_USER}
+                    password: ${SMTP_PASSWORD}
+                    sender: ${SMTP_FROM}
+                    startup_check_address: ${SMTP_FROM}
+            identity_providers:
+                oidc:
+                    hmac_secret: ${AUTHELIA_OIDC_HMAC_SECRET}
+                    jwks:
+                        - key: ENC[AES256_GCM,data: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,iv:3+8pXP5/WblstE8lIx/qp8L0HXrY/NTIh4FfYyxS2Ac=,tag:tyO5mpOTMcz1dT9mspXSbA==,type:str]
+                    clients:
+                        - client_id: ${AUTHELIA_CLOUDFLARE_ID}
+                          client_name: Cloudflare Access
+                          client_secret: ${AUTHELIA_CLOUDFLARE_SECRET}
+                          consent_mode: implicit
+                          redirect_uris:
+                            - ${AUTHELIA_CLOUDFLARE_REDIRECT_URI}
+                          require_pkce: true
+                        - client_id: ${AUTHELIA_MEALIE_ID}
+                          client_name: Mealie
+                          client_secret: ${AUTHELIA_MEALIE_SECRET_DIGEST}
+                          consent_mode: implicit
+                          redirect_uris:
+                            - https://mealie.${BASE_DOMAIN}/login
+                          require_pkce: true
+            access_control:
+                default_policy: two_factor
+                rules:
+                    - domain:
+                        - auth.${BASE_DOMAIN}
+                      domain_regex: []
+                      networks: []
+                      policy: bypass
+                      resources: []
+                      subject: []
+                    - domain:
+                        - ${BASE_DOMAIN}
+                      domain_regex: []
+                      networks: []
+                      policy: two_factor
+                      resources: []
+                      subject:
+                        - group:users
+            authentication_backend:
+                password_reset:
+                    disable: true
+                password_change:
+                    disable: false
+                ldap:
+                    additional_groups_dn: OU=Groups
+                    additional_users_dn: OU=people
+                    base_dn: ${LLDAP_LDAP_BASE_DN}
+                    attributes:
+                        group_name: cn
+                        display_name: displayName
+                        username: uid
+                        mail: mail
+                    groups_filter: (member={dn})
+                    implementation: custom
+                    password: ${LLDAP_LDAP_USER_PASS}
+                    start_tls: false
+                    timeout: 5s
+                    tls:
+                        minimum_version: TLS1.2
+                        server_name: ""
+                        skip_verify: false
+                    address: ldap://lldap-ldap.lldap.svc.cluster.local:3890
+                    user: uid=ldap,ou=people,${LLDAP_LDAP_BASE_DN}
+                    users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
+                refresh_interval: 5m
         cnpg:
             main:
                 backups:
@@ -99,74 +140,19 @@ spec:
         credentials:
             s3:
                 type: s3
-                url: "${S3URL}"
-                bucket: "${S3BUCKET}"
-                accessKey: "${S3ID}"
-                secretKey: "${S3KEY}"
-                encrKey: "${S3ENCRKEY}"
-        default_redirection_url: https://auth.${BASE_DOMAIN}
-        domain: ${BASE_DOMAIN}
-        identity_providers:
-            oidc:
-                access_token_lifespan: 1h
-                authorize_code_lifespan: 1m
-                clients:
-                    - audience: []
-                      authorization_policy: two_factor
-                      consent_mode: implicit
-                      description: Cloudflare Access
-                      grant_types:
-                        - authorization_code
-                      id: ${AUTHELIA_CLOUDFLARE_ID}
-                      pkce_challange_method: S256
-                      public: false
-                      redirect_uris:
-                        - ${AUTHELIA_CLOUDFLARE_REDIRECT_URI}
-                      require_pkce: true
-                      response_modes:
-                        - form_post
-                      response_types:
-                        - code
-                      scopes:
-                        - openid
-                        - profile
-                        - email
-                        - groups
-                      secret: ${AUTHELIA_CLOUDFLARE_SECRET}
-                      token_endpoint_auth_method: client_secret_basic
-                      userinfo_signing_algorithm: RS256
-                    - id: ${AUTHELIA_MEALIE_ID}
-                      description: Mealie
-                      secret: ${AUTHELIA_MEALIE_SECRET_DIGEST}
-                      token_endpoint_auth_method: client_secret_basic
-                      authorization_policy: two_factor
-                      consent_mode: implicit
-                      redirect_uris:
-                        - 'https://mealie.${BASE_DOMAIN}/login'
-                      public: false
-                      require_pkce: true
-                      pkce_challenge_method: S256
-                      grant_types:
-                        - authorization_code
-                      scopes:
-                        - openid
-                        - profile
-                        - groups
-                        - email
-
-                enable_client_debug_messages: true
-                enabled: true
-                id_token_lifespan: 1h
-                minimum_parameter_entropy: 8
-                refresh_token_lifespan: 90m
+                url: ${S3URL}
+                bucket: ${S3BUCKET}
+                accessKey: ${S3ID}
+                secretKey: ${S3KEY}
+                encrKey: ${S3ENCRKEY}
         ingress:
             main:
                 enabled: true
                 hosts:
                     - host: auth.${BASE_DOMAIN}
                       paths:
-                          - path: /
-                            pathType: Prefix
+                        - path: /
+                          pathType: Prefix
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
@@ -179,17 +165,6 @@ spec:
                         entrypoints:
                             - websecure
                 required: true
-        notifier:
-            filesystem:
-                enabled: false
-            smtp:
-                enabled: true
-                host: ${SMTP_HOST}
-                port: ${SMTP_PORT}
-                username: ${SMTP_USER}
-                plain_password: ${SMTP_PASSWORD}
-                sender: ${SMTP_FROM}
-                startup_check_address: ${SMTP_FROM}
         persistence:
             config:
                 enabled: true
@@ -203,16 +178,28 @@ spec:
                       src:
                         enabled: true
                       type: restic
-        server:
-            read_buffer_size: 8192
-            write_buffer_size: 8192
-        session:
-            expiration: 1h
-            inactivity: 5m
-            name: authelia_session
-            remember_me_duration: 5M
-            same_site: lax
-        totp:
-            issuer: ${BASE_DOMAIN}
-            period: 30
-            skew: 1
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                AUTHELIA_SESSION_SECRET: ${AUTHELIA_SESSION_ENCRYPTION_KEY}
+                                AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ${AUTHELIA_JWT_TOKEN}
+                                AUTHELIA_STORAGE_ENCRYPTION_KEY: ${AUTHELIA_ENCRYPTION_KEY}
+sops:
+    shamir_threshold: 3
+    age:
+        - recipient: age1fxr2mjtfjy0t755p2tmemttj4ft70sgffhv0ax99v6agutqh6d6shh439a
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBCQjB2V1ZsV3AxNVJ6MWM0
+            V2VhOTg3RGxpeDZ1RzBCNWZFajQrNDdiRGlzCjQzQjNaOVdaNis5eHo5anFaejQ5
+            enNVRVdKZlN4azFvUHk4elpyLzZOaWsKLS0tIE1wc1NKam04ejNkN1RBNVEvQ292
+            ZXAxUmVYV3JUcnNZQzg5ZFQxREo0OXMKhuH7NURT8m2IoZy0y4zjR2PTVh72znQo
+            AaUGrcuKLPJozSv9FxELyhMhj9ZmS8KSeLNmRA5i3oF7r1N/QycPHA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-04-16T19:34:14Z"
+    mac: ENC[AES256_GCM,data:bK35Zl5OskRSGDzJQuEbzBu1tpXF6KE1Q+I4x0q6JN0jExdx34Em2umlsSVb/dXSGr1ao+JrXJwjdtz6yELrRJirLRTjnYtFnyQ1ojC1TQuVxAOSNaZ5oHJHZ9+SwKzjwXYn1n1Kar9vq9E7I1j373VrNvNUrguEeD1rr1y/+4s=,iv:/mVJMyqObpdmpJVyUO+JfJ1y8BUyvwi6SZGJ4/u8lCw=,tag:jG877JtvuMV/V/FzvDZU9g==,type:str]
+    encrypted_regex: jwks
+    version: 3.10.1

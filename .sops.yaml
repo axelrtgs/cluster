@@ -13,3 +13,6 @@ creation_rules:
   - path_regex: talsecret.yaml
     age: age1fxr2mjtfjy0t755p2tmemttj4ft70sgffhv0ax99v6agutqh6d6shh439a
 ## DO NOT REMOVE: Personal setting go under this line
+  - path_regex: .*authelia.*helm-release.yaml$
+    age: age1fxr2mjtfjy0t755p2tmemttj4ft70sgffhv0ax99v6agutqh6d6shh439a
+    encrypted_regex: 'jwks'
