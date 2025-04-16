@@ -42,6 +42,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: tautulli.${BASE_DOMAIN}
                       paths:
@@ -53,11 +54,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             config:
                 enabled: true

@@ -35,6 +35,7 @@ spec:
                 annotations:
                     traefik.frontend.passHostHeader: "false"
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: truenas.${BASE_DOMAIN}
                       paths:
@@ -46,11 +47,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
         service:
             main:
                 enabled: true

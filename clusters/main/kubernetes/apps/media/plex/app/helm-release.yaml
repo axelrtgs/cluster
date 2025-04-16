@@ -29,6 +29,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: plex.${BASE_DOMAIN}
                       paths:

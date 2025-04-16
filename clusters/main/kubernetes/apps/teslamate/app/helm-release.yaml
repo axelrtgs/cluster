@@ -58,6 +58,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: teslamate.${BASE_DOMAIN}
                       paths:
@@ -69,11 +70,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
         workload:
             main:
                 podSpec:
