@@ -14,7 +14,6 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: authelia
     values:
         TZ: America/Montreal
         domain: ${BASE_DOMAIN}
@@ -57,7 +56,7 @@ spec:
                                 - name
                     hmac_secret: ${AUTHELIA_OIDC_HMAC_SECRET}
                     jwks:
-                        - key: ENC[AES256_GCM,data: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,iv:SjcNO4AFzSckbeorG9O5PLW1Dd7pKi/uPX40WW5n2KY=,tag:WG/HZaHNV5CePMzOv8pxWQ==,type:str]
+                        - key: ENC[AES256_GCM,data:Nwz1hNjZpa3oNCSFnvKQj+UqSARHPw2zd/G6YjE9LGfJOw0mlAV6ul8v+SvNtaeEBNQdupTZ1tf+WSWSdGWDYfF/R7OA8Bn/WNIDJlmjM4kz/V64i7Vb5Sr5UzpL0aTJwV7NsX2rtsFsdurNRlFwL76gSEA68vDm/MXgZeOKGBrAw7FfBbNFf+3XZ36vrV5gS2vsYuJQ/q3BEhxXF7OYyBd2kMvplvPq49c+RAdJwvDt+Vum3bnWjTTP3N7ZLsxo8nWvl2TWYf4SmXbllbvktu4JIafF3L53H9+VfReRXCZLyuisFBy+EvoFETnIin+P9/6xGybPKGSf+doqm0pltAdwgKaUwlXb+ywfhfyVjcNKAjduBNb0I+LDCdPkWFsyybr0CTglIxMhIe3dzPtWAJ6AZU2c3xc+641IvFhmkN7qMpmUr7qBPo3ZBz1fEd61T3YCjr6IlYb+cbWo1NxdjB/rfCHECA8LJfO1e0J3nuL1ze+5Mkqm+QgawFXfMDKdhrqyDUZlmHUC/7sKuoYAPoXLd7gnp1RNdk4OX2uu8Uh+9RvI7nXYAx8hdJqxtnkg4EHyPm3XcpyRnSzQJm/ipcDjK5LAKcLQHhd7XQ6qDgq894uf2qaHXfDJ9NU78FEzqJzlBlLF/i5h4cPwe1yaTEXpzNPH37K96qhCbfOUZCyvsP0f+B70vOgOun1Vv6tn9Bc9Kdt3aBYxGbyuywroEIPHjGi3VJQAsGn+7HL9fQSi73zQcNtyiYzub06dvWaACpc4kjPGlOSNnD8diJmGeCo9b5BKrEwI5mJ+B/3sQOJV/YVjVp5XYMTeY2pV83yaGRbkWsY78lG6our3wVrQFKdQI0nrcqXhASqcR6nhb1755A0LuJ8/7XjvU2+SVvPLHRtbCCw1UR3oGqqFaR8BukCNm+RDiwQ2uLbK9GqbYJqtX41BJUzFb5/Qi/1jLSmJb4joJ2RQklnOuV+9S2/17JPkzwh7OXOx/ZYnxarEe3uoncIXEHPvUTor3skXatHdOP1wNFXBwo/V7lfHtLUSDWCo4M8wkNPyZ+5SKB5mrb0gQOG2WFxduCgbXitMIzwc1Ugdp49Uym/zQJM06EoOYW4tdiYyCJr1hdwUE24QDdsj2hoqDOD6gTAAA45h7TEuz0m7/iR2UYV4zGwnRfsfuSYfVlQGN+FJZkQk2pC+db/d/KYqHPIZSHt0qgqqRGqPbAkOZPHslEm9ROscNlnuIsemg8nlVk7OkQcI81DBRKHoym7+fxSOMNbS95B/bVVtmAHAzkc8eHTOS7d96UiPzT0TRceUYoweuVSzV8uoqKHu06HigLneD6hQucif565sRp5MkkHupvhQTHL93xMbgtCrzvdu4L2NS7t9Q9q3LWTfw2MaKtl4cx2XJq53aSygAhIEljqRU8/JZQ7WRYqpdBCAfbxIQoH1Ig/H3ZFG8l6Mg/MnFy7elSIPcKSVF2odSHvyfIe8GJk3qVQxciRtcL2T0C+Qi8YQ6YMhz4zzrw/Mjk+QA17CTnIO4skAiLPXbIvd7nx9+zsld08RMUl7IrIPUW9mQJj/AHg0q4dMX+FACR3UYRk6/x2bsmcXkd0RD6X1hY6HxdHNZQYEJCPVFwtQLQsZ10hxuPWi5t5szPrl2rCKQ3XZjipR1Si7wV6rliNuVyuz7hXmogiqKC5BnkLYhi/v6EbrH6VRUl0fJaKrDg2P6HiJLrdsmsRL/5otcYKGkCF9LZqcXvyy8pE4ZDK+cmpW+BWeUGmHwpSci0xhB/TWL7zxJ2hAoIGu/zUsoRIfkjLJclFcLLuPIXm+hQq2tHmVgWCz00FfuC7T5gsakmR1LVHmjZWLkc/pasf2oXCHceCj2vhqpp2uh21+kfrzRo1Ez9nXOB9YvQGeA0D6wuNuqKce1/1rSU6J+He/JwpwSIPsmE1/dPKtMbLip7yXOudKbotnxUTlZ3js0V+HqOkgE7rr6ku0PnR8VgRFbfSXVcmFLqCVcHyoqDqFn1bsyAGoycFCHofgaioVHMQo2OxTQWG5NiPU6qLDuB9wEaUNtJUM1SAcnUrJAhQeZn5AqizyjKPN6jjwrp0hUWSrnZxWayH7g69i77JFw1gWBQD+O30wUshLO2PfUMYFV2vGSAy+KeCbknKrLv9DXuylCINwBa3mS2ITn5wvubMRE+K5ZsE8SIGN3zCOVqvaIqH+MiNRhMhNk5WrPjJeVsI7S7DN4/8EWPc2L7vSKQw0BMIwvY7NNo4GNuN8uVn4hRKU97gNT8hd9PNaEIjEOQV9YSCy7xIX3bLULUSYNeIpfLKPELZpcyhCeef4hvaVgW/+lHhujMhC3woVD+broAoupYswcU5YS1jynt8A17WJSKHCjhjaKyWSWe++ljuKU3ChgYkgzWp80gFvBkkobm/+JubSCBA2rjHrhHGqsexfTKkgPbA91podoRkmbtNMgYCxx2bsCBmBz80pTu5w6aMwqVggvsdKP9uy4/e8hcyuqtA/xUzkNRiZ/z5Ggp/LxSxpk0jz4akuGOB7jmjzf9o+/8hlsCPgYfJXGoguwsPAmfdAwb0t9QQ9FKkuf+GLTFLu3uPa/58M45HIoKFLYxdx9oh3dT11T3pUmciYe8UBHqRTKnBwaQbtp94aSNwQ96beA6trV8LtNsFwQGTRqoV9FgEeH3qlAflHeqSYcRc6fgRDGiyqQOzISnGGvLVybreaiFWs79MX6cx+oCRITMfMHc7e0dBAcXCTUsXwiMdD+oFs4o0V99SV5QWKGirIIPiMFkCviPVcBMIpHLJE1iurccHMGdtpKdRwEJOteRzEAcxfiuJLVALCySkH8bDaWqOat5H9INAqvK5Auyn8JMdCXvBe1qwoZPzzpCp4XIN7j3UFwQk3JYj74/AD8zP5k3oCSy+7aoetxx0eiUo09uHvepR3JUhVLVhWUFlNBl1+sc3DJWdsEQDS+uOPcM156yg0FP6cPlD1gFFijdn2AxbseuJKv6bYXhESTMFU2/9n5s6r/t5cgq5tlHVKJCOYJiuH9ykCzz8Khoe6cuKlTU1K9hWTzKfdIy2sUaU1DDYpQNto2diAtzyg3RmfgFGXJbc8ZFSJAgFfp0L1Jx5Y8vQZLfw9EiiBv6YI5SVw4SoGd106ipaw/DgkcJ1joaoRckrAqoE/UjtDxvXtbQZ+gbeBrlFkDArfZjz6rKXJxiGomuG8LfY7B9EDmlxGmdLnO5cIa9VsVz6FkqmQvu6ndITbvT/qvTfZ+eg3Q6XQx6nutfRcFXHc8qko3rNZK6Q3Zn1LrCnAA0cGrRtfguiS4A2JtsCzB75MdGDidkiIQ92Y8HOvRJpAA//dPmMv6t/3Sht0BBBQhWEn9Mhtb6EB6q10H3hQVvG01ld1OOWfyP2DrzHGqhy7i4QXk8OzWlciLye3S9zSyAc09drIyxb8LZpo5Kd0JcypJqB1+sKtFqU7ATGPQpDD0P+aoNp8k8IBVY1fk9VG+3XIN/R6+lqlMoacO96mtcJeGoFD16cexUw0GlFuUdVH2uGD8q8dfJN71JdyK675mj9haGnyIlNfGAsESN9ZSQ7/N9DLUACBVLwtSNnPHo9Ho7s0KEoF3MK8AtiwRhiQ30J9qdmEUKsZuzbaHb6a0heerjG2gRpgBlf7iylWbPolJeeVakxRJVhO041htmmjSH3Ztu2K3B9uEhdGg5llOQrQcGpC8lGMCoxQEpwVVZekNJGJt85n9g/pbSA9mkJ4XfK6QrXnDVTiyFvNiIy+5DmU3QkqU0qcg8hs7FUOEKmbtb69ypMXKovqW7doJAnGtgQ4fJPKuBvXkoCqKv63FYY6MtIAKJT73LjdzhWPHoeZrqauw36fMsaf+MS/mlMlvrJYzdZT7puVr9EoqvnQ7ul5plpXeHDGxu1YFFR6V9oHdXepe3m3d0ca65cBVYRY7iO9hgNFkqICv4MhRNse7KePlvS88xt7XTMdDfaEP0PSO7WrPs9LYUSTL9P0sHBU7+R04/rBmRReGkQB4vK0B+0yUcb5phCRKcTsac6gtxovLHjxiGGXzo7EWmqxtXg29sLU1XQ5B5eXlPStKFcxYcmsPf+yrIK98myd4ytSD8aaB91SJsyG/sSl9IVuWm0RVCCVCgdwqUuQlYv7UdoS2gkQHLTIbKwoKZpgda5ObXIuox5sEc3VoxYR+rNB+UNXn35N3g09VKTEF2M18gLBrpZkrx9pDfVla0g0eTPSdKI+hWlelVPZHHjhX6EIZtgH/E4w1TDN47eeqsib8seF5+p1UxPRfhsXNbsKPM4OjM2vzvoCxED6XTmb42GtxtP4aEJVR8o=,iv:+u8mZRagqO2ZzaWMSBkTfoPBf0itihuzdLrQExV2ypU=,tag:OnfiRYek/Mj2/jVtoG7KfA==,type:str]
                     clients:
                         - client_id: ${AUTHELIA_CLOUDFLARE_ID}
                           client_name: Cloudflare Access
@@ -156,6 +155,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: auth.${BASE_DOMAIN}
                       paths:
@@ -165,13 +165,6 @@ spec:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
-                    homepage:
-                        enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
                 required: true
         persistence:
             config:
@@ -201,13 +194,13 @@ sops:
         - recipient: age1fxr2mjtfjy0t755p2tmemttj4ft70sgffhv0ax99v6agutqh6d6shh439a
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHaGw2M0lIQ3c1eTNtSHhI
-            Zm1HK3NLRmllZml6Uk5qU3RtVExBRit6RWtBCklySUdTcFJ4NFRkOVN6enBNZEdm
-            cEhzZkhLL09CVFFqYXNPSkVBWXdnTjQKLS0tIE9GSm80ZU5jZG8rRWovd1RQOU5u
-            TDRyU1N2YTI5TmVSdVVJRlRTTWlZLzAK1lTxb0A4aLq27+nHOsrB4o26WcdBSZJQ
-            lYXrg16hwBpFvdI6wktAWVGXD2QStY4cO81a2DlRV2hCcAhso+hsvw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA0amtQYm9aOWdiUmI1V0Jn
+            Zms2RUlJTUR5L3hIUiswZmZZb2ROVTk0TjFzCkw0aWFKUk1oM0xYVHkvSjZkc2NJ
+            MVk2V1RvM2ZHSW9DRk9XK1hyUXZXREkKLS0tIGIrUW12Z2IyNW43bmlBQlFSVnFE
+            bEhkVU9JTk1XRjNwQjZ4RG4rVzlSWWMKKh5ea26BWyQPg3EAbFcK6PdImkFsM+VD
+            +O24Z386bUdn0IIlM8iDhZM238d9cg0i+sohSUv+uWM4TcM2fq+DEA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-04-16T20:10:49Z"
-    mac: ENC[AES256_GCM,data:LCSBZPIQviYGl89FtdSNV7AyM/6FPT65+bhiarqghtKXWh5ayCBLeFVG9m4yAGhg6+PXVTSveXW9Sg3EYrAzw7CXcKOi1d4k87jahyw4Nch2eIITl8WVyx1qBVYBbMBYrVvfxTyMx8JJKmbZ7tJ0+jU/FHZdL8hsJLgvmAT3Ack=,iv:bMK1xX9bMnQSf2cNIAeXSKzq8ZsLTUqeVUqKv6Fei6k=,tag:GWOkb7hGQUCWujBEpnzMaQ==,type:str]
+    lastmodified: "2025-04-17T00:54:55Z"
+    mac: ENC[AES256_GCM,data:RnmBObbOzUxyEX3imWEfzno8hQV9/cSHS3FdyCJkOL/5AMIS42stavXDd2Mp0KjI0X7GWNjOKUGjqsRfj5nBJ80k4cGRFaj7liwbnAOhn5yOfO0WldLRog3X9f7v8QAk4mSt8nx5ZwEAisruAYkyMDBiw6pgm+jvmpAeBm4XjR4=,iv:OjYpmuOgfLRZg12HoYrX4V1lqH6lg5q3p6IEuMFOuQs=,tag:t47SiUydU7aBzMQBQbr1sQ==,type:str]
     encrypted_regex: jwks
     version: 3.10.1

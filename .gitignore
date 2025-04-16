@@ -8,4 +8,5 @@ clustertool
 sopssecret.yaml
 sopssecret*
 *sopssecret*
+mounts/
 .DS_Store

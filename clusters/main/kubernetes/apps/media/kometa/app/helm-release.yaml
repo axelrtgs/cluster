@@ -28,7 +28,7 @@ spec:
         retries: 3
     uninstall:
       keepHistory: false
-    releaseName: kometa
+
     values:
         TZ: America/Montreal
         addons:

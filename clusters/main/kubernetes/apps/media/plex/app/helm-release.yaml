@@ -15,7 +15,7 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: plex
+
     values:
         TZ: America/Montreal
         credentials:
@@ -29,6 +29,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: plex.${BASE_DOMAIN}
                       paths:
@@ -38,10 +39,6 @@ spec:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
-                    homepage:
-                        enabled: false
-                    traefik:
-                        enabled: false
         persistence:
             config:
                 enabled: true

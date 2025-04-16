@@ -15,7 +15,7 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: lldap
+
     values:
         TZ: America/Montreal
         cnpg:
@@ -55,6 +55,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: ldap.${BASE_DOMAIN}
                       paths:
@@ -64,13 +65,6 @@ spec:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
-                    homepage:
-                        enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             data:
                 enabled: true
