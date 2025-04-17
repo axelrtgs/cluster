@@ -59,8 +59,6 @@ spec:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
-                    homepage:
-                        enabled: false
         persistence:
             media:
                 enabled: true

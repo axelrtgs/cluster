@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: external-service
+    name: external-service-truenas
     namespace: external-service
 spec:
     interval: 15m
@@ -33,7 +33,7 @@ spec:
         ingress:
             main:
                 annotations:
-                    traefik.frontend.passHostHeader: "false"
+                    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
                 enabled: true
                 ingressClassName: external
                 hosts:
@@ -45,8 +45,6 @@ spec:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
-                    homepage:
-                        enabled: false
         service:
             main:
                 enabled: true
@@ -57,4 +55,3 @@ spec:
                         port: ${TRUENAS_PORT}
                         protocol: https
                 type: ExternalIP
-                useSlice: false
