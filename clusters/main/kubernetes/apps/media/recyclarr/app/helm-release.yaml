@@ -28,7 +28,7 @@ spec:
         retries: 3
     uninstall:
       keepHistory: false
-    releaseName: recyclarr
+
     values:
         TZ: America/Montreal
         addons:

@@ -15,7 +15,7 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: plex
+
     values:
         TZ: America/Montreal
         credentials:

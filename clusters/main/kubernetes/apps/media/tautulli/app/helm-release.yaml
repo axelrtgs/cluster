@@ -28,7 +28,7 @@ spec:
         retries: 3
     uninstall:
       keepHistory: false
-    releaseName: tautulli
+
     values:
         TZ: America/Montreal
         credentials:

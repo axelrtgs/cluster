@@ -15,7 +15,7 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: teslamate
+
     values:
         TZ: America/Montreal
         cnpg:

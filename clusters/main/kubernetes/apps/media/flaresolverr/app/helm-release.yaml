@@ -28,7 +28,7 @@ spec:
         retries: 3
     uninstall:
       keepHistory: false
-    releaseName: flaresolverr
+
     values:
         TZ: America/Montreal
         credentials:
