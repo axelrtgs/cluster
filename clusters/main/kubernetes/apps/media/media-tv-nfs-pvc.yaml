@@ -14,11 +14,6 @@ spec:
   nfs:
     server: ${TRUENAS_IP}
     path: /mnt/main/media/tv
-  mountOptions:
-    - nfsvers=4.2
-    - nconnect=4
-    - noatime
-    - nodiratime
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
