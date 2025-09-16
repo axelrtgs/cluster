@@ -40,6 +40,42 @@ nodes:
               gateway: ${GATEWAY}
           vip:
             ip: ${VIP}
+    - hostname: k8s-control-2
+      ipAddress: ${MASTER2IP_IP}
+      controlPlane: true
+      nameservers:
+        - 1.1.1.1
+        - 8.8.8.8
+      installDiskSelector:
+        size: <= 1600GB
+      networkInterfaces:
+        # suffix is the adapter mac adres.
+        - interface: eth0
+          addresses:
+            - ${MASTER2IP_CIDR}
+          routes:
+            - network: 0.0.0.0/0
+              gateway: ${GATEWAY}
+          vip:
+            ip: ${VIP}
+    - hostname: k8s-control-3
+      ipAddress: ${MASTER3IP_IP}
+      controlPlane: true
+      nameservers:
+        - 1.1.1.1
+        - 8.8.8.8
+      installDiskSelector:
+        size: <= 1600GB
+      networkInterfaces:
+        # suffix is the adapter mac adres.
+        - interface: eth0
+          addresses:
+            - ${MASTER3IP_CIDR}
+          routes:
+            - network: 0.0.0.0/0
+              gateway: ${GATEWAY}
+          vip:
+            ip: ${VIP}
 controlPlane:
     patches:
         - '@./patches/controlplane.yaml'
@@ -69,6 +105,9 @@ controlPlane:
         hard=True
         nconnect=16
         noatime=True
+        nodiratime=True
+        rsize=131072
+        wsize=131072
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
@@ -100,6 +139,9 @@ worker:
         hard=True
         nconnect=16
         noatime=True
+        nodiratime=True
+        rsize=131072
+        wsize=131072
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
