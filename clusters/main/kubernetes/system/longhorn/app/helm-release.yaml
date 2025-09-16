@@ -5,7 +5,7 @@ metadata:
   namespace: longhorn-system
 spec:
   interval: 5m
-
+  releaseName: longhorn
   chart:
     spec:
       chart: longhorn

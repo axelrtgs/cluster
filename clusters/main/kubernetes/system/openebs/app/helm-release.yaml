@@ -5,7 +5,7 @@ metadata:
   namespace: openebs
 spec:
   interval: 5m
-
+  releaseName: openebs
   chart:
     spec:
       chart: openebs
@@ -42,3 +42,8 @@ spec:
         # The Mayastor backend contains a duplicate of snapshot controller which will cause conflicts
         mayastor:
           enabled: false
+
+    loki:
+      enabled: false
+    alloy:
+      enabled: false
