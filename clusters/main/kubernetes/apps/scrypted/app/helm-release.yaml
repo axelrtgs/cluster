@@ -30,6 +30,8 @@ spec:
       keepHistory: false
 
     values:
+        image:
+          tag: v0.142.7-noble-full@sha256:e07520cb9cd4be246a5073435ebea84970719089a285efc50f9b613590cde055
         TZ: America/Montreal
         credentials:
             s3:
@@ -72,14 +74,17 @@ spec:
                 loadBalancerIP: ${SCRYPTED_IP}
                 ports:
                     main:
+                        enabled: true
                         port: 10611
                         protocol: tcp
                         targetPort: 10611
                     mdns:
+                        enabled: true
                         port: 5353
                         protocol: udp
                         targetPort: 5353
                     homekit:
+                        enabled: true
                         port: 36515
                         protocol: tcp
                         targetPort: 36515
