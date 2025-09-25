@@ -77,8 +77,8 @@ spec:
         enabled: false
       resources:
         requests:
-          cpu: 75m
+          cpu: 100m
         limits:
-          memory: 500Mi
+          memory: 1Gi
     defaultBackend:
       enabled: false
