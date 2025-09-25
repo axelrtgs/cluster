@@ -25,16 +25,16 @@ spec:
       retries: 3
   values:
     defaultSettings:
-      defaultReplicaCount: 2
-      storageOverProvisioningPercentage: 100000
+      defaultReplicaCount: "2"
+      storageOverProvisioningPercentage: "100000"
       # v2DataEngine: true
-      concurrentAutomaticEngineUpgradePerNodeLimit: 2
+      concurrentAutomaticEngineUpgradePerNodeLimit: "2"
       defaultDataLocality: best-effort
       replicaAutoBalance: best-effort
       migratable: true
     persistence:
       defaultClass: true
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: "2"
       defaultDataLocality: best-effort
       replicaAutoBalance: best-effort
       migratable: true
