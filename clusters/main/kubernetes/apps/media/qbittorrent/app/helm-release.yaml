@@ -43,17 +43,20 @@ spec:
     values:
         TZ: America/Montreal
         addons:
-            vpn:
-                env:
-                    OPENVPN_PASSWORD: ${VPN_PASSWORD}
-                    OPENVPN_USER: ${VPN_USER}
-                    SERVER_REGIONS: ${VPN_SERVER_REGIONS}
-                    VPN_PORT_FORWARDING: ${VPN_PORT_FORWARDING}
-                    VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
-                excludedNetworks_IPv4:
-                    - ${VPN_EXCLUDED_NETWORK}
-                killSwitch: true
-                type: gluetun
+            gluetun:
+                enabled: true
+                container:
+                    env:
+                        OPENVPN_PASSWORD: ${VPN_PASSWORD}
+                        OPENVPN_USER: ${VPN_USER}
+                        SERVER_REGIONS: ${VPN_SERVER_REGIONS}
+                        VPN_PORT_FORWARDING: ${VPN_PORT_FORWARDING}
+                        VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
+                        DNS_KEEP_NAMESERVER: "on"
+                        DOT: "off"
+                        FIREWALL: "on"
+                        FIREWALL_INPUT_PORTS: "10095"
+                        FIREWALL_OUTBOUND_SUBNETS: "${VPN_EXCLUDED_NETWORK}"
         credentials:
             s3:
                 type: s3
