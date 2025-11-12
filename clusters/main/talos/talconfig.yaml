@@ -33,6 +33,7 @@ nodes:
       networkInterfaces:
         # suffix is the adapter mac adres.
         - interface: eth0
+          mtu: 9000
           addresses:
             - ${MASTER1IP_CIDR}
           routes:
@@ -51,6 +52,7 @@ nodes:
       networkInterfaces:
         # suffix is the adapter mac adres.
         - interface: eth0
+          mtu: 9000
           addresses:
             - ${MASTER2IP_CIDR}
           routes:
@@ -69,6 +71,7 @@ nodes:
       networkInterfaces:
         # suffix is the adapter mac adres.
         - interface: eth0
+          mtu: 9000
           addresses:
             - ${MASTER3IP_CIDR}
           routes:
@@ -113,14 +116,6 @@ controlPlane:
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
-    - path: /etc/systemd/network/00-eth0.link
-      op: overwrite
-      permissions: 420
-      content: |
-        [Match]
-        OriginalName=eth0
-        [Link]
-        MTUBytes=9000
 
 worker:
     patches:
@@ -157,11 +152,3 @@ worker:
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
-    - path: /etc/systemd/network/00-eth0.link
-      op: overwrite
-      permissions: 420
-      content: |
-        [Match]
-        OriginalName=eth0
-        [Link]
-        MTUBytes=9000
