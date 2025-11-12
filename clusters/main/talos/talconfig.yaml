@@ -106,11 +106,21 @@ controlPlane:
         nconnect=16
         noatime=True
         nodiratime=True
-        rsize=131072
-        wsize=131072
+        rsize=1048576
+        wsize=1048576
+        timeo=600
+        retrans=2
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
+    - path: /etc/systemd/network/00-eth0.link
+      op: overwrite
+      permissions: 420
+      content: |
+        [Match]
+        OriginalName=eth0
+        [Link]
+        MTUBytes=9000
 
 worker:
     patches:
@@ -140,8 +150,18 @@ worker:
         nconnect=16
         noatime=True
         nodiratime=True
-        rsize=131072
-        wsize=131072
+        rsize=1048576
+        wsize=1048576
+        timeo=600
+        retrans=2
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
+    - path: /etc/systemd/network/00-eth0.link
+      op: overwrite
+      permissions: 420
+      content: |
+        [Match]
+        OriginalName=eth0
+        [Link]
+        MTUBytes=9000
