@@ -140,13 +140,14 @@ worker:
       op: create
     - content: |
         [ NFSMount_Global_Options ]
-        nfsvers=4.2
+        nfsvers=3
+        async
         hard=True
         nconnect=16
         noatime=True
         nodiratime=True
-        rsize=1048576
-        wsize=1048576
+        rsize=131072
+        wsize=131072
         timeo=600
         retrans=2
       permissions: 420
