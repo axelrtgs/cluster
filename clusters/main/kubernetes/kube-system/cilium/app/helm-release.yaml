@@ -36,7 +36,6 @@ spec:
   values:
     autoDirectNodeRoutes: true
     routingMode: native
-    tunnel: disabled
     hubble:
       enabled: false
     cluster:
