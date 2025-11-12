@@ -34,8 +34,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # autoDirectNodeRoutes: true
-    # routingMode: native
+    autoDirectNodeRoutes: true
+    routingMode: native
+    tunnel: disabled
     hubble:
       enabled: false
     cluster:
