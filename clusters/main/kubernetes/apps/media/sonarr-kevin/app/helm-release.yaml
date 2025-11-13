@@ -55,11 +55,11 @@ spec:
         persistence:
             media:
                 enabled: true
-                existingClaim: media-tv-nfs-pvc
+                existingClaim: media-nfs-pvc
                 targetSelector:
                     main:
                         main:
-                            mountPath: /data
+                            mountPath: /media
             downloads:
                 enabled: true
                 existingClaim: downloads-nfs-pvc

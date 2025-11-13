@@ -5,9 +5,7 @@ resources:
   - bazarr/ks.yaml
   - downloads-nfs-pvc.yaml
   - kometa/ks.yaml
-  - media-movies-nfs-pvc.yaml
   - media-nfs-pvc.yaml
-  - media-tv-nfs-pvc.yaml
   - overseerr/ks.yaml
   - plex/ks.yaml
   - plex-certs-nfs-pvc.yaml
