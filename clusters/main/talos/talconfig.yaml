@@ -142,12 +142,13 @@ worker:
         [ NFSMount_Global_Options ]
         nfsvers=3
         async
-        hard=True
+        hard
         nconnect=16
-        noatime=True
-        nodiratime=True
-        rsize=131072
-        wsize=131072
+        noatime
+        nodiratime
+        nolock
+        rsize=1048576
+        wsize=1048576
         timeo=600
         retrans=2
       permissions: 420

@@ -18,6 +18,7 @@ spec:
     - nconnect=16
     - noatime
     - nodiratime
+    - nolock
     - rsize=131072
     - wsize=131072
     - timeo=600
