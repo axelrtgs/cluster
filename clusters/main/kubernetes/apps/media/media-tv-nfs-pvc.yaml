@@ -11,6 +11,17 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - nfsvers=3
+    - async
+    - hard
+    - nconnect=16
+    - noatime
+    - nodiratime
+    - rsize=1048576
+    - wsize=1048576
+    - timeo=600
+    - retrans=2
   nfs:
     server: ${TRUENAS_IP}
     path: /mnt/main/media/tv
