@@ -24,7 +24,7 @@ spec:
     - timeo=600
     - retrans=2
   nfs:
-    server: ${TRUENAS_IP}
+    server: ${TRUENAS_NFS_IP}
     path: /mnt/NVMe/downloads
 ---
 apiVersion: v1
