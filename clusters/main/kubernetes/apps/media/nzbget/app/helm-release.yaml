@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: sabnzbd
+    name: nzbget
     namespace: media
 spec:
     interval: 15m
     chart:
         spec:
-            chart: sabnzbd
+            chart: nzbget
             version: 23.0.0
             sourceRef:
                 kind: HelmRepository
@@ -51,7 +51,7 @@ spec:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: sabnzbd.${BASE_DOMAIN}
+                    - host: nzbget.${BASE_DOMAIN}
                       paths:
                         - path: /
                           pathType: Prefix
@@ -77,10 +77,6 @@ spec:
             config:
                 enabled: true
                 targetSelector:
-                    exportarr:
-                        exportarr:
-                            mountPath: /config
-                            readOnly: true
                     main:
                         main:
                             mountPath: /config
