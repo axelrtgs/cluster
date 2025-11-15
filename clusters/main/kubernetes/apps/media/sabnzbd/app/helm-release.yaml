@@ -41,11 +41,11 @@ spec:
                 encrKey: "${S3ENCRKEY}"
         resources:
           limits:
-            cpu: '16'
-            memory: 8Gi
+            cpu: '32'
+            memory: 20Gi
           requests:
-            cpu: 10m
-            memory: 50Mi
+            cpu: '2'
+            memory: 2Gi
         ingress:
             main:
                 enabled: true
