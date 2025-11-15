@@ -22,23 +22,40 @@ patches:
     - '@./patches/all.yaml'
 nodes:
     # We would adivce to always stick to a "k8s-something-1" style naming scheme
-    - hostname: k8s-control-2
-      ipAddress: ${MASTER2IP_IP}
-      controlPlane: true
-      installDiskSelector:
-        size: <= 1600GB
-      networkInterfaces:
-        # suffix is the adapter mac adres.
-        - interface: eth0
-          mtu: 1500
-          dhcp: true
-          vip:
-            ip: ${VIP}
-        - interface: eth1
-          mtu: 9000
-          addresses:
-            - ${NFS2IP}
-          routes: []
+    # - hostname: k8s-control-1
+    #   ipAddress: ${MASTER1IP_IP}
+    #   controlPlane: true
+    #   installDiskSelector:
+    #     size: <= 1600GB
+    #   networkInterfaces:
+    #     # suffix is the adapter mac adres.
+    #     - interface: eth0
+    #       mtu: 1500
+    #       dhcp: true
+    #       vip:
+    #         ip: ${VIP}
+    #     - interface: eth1
+    #       mtu: 9000
+    #       addresses:
+    #         - ${NFS1IP}
+    #       routes: []
+    # - hostname: k8s-control-2
+    #   ipAddress: ${MASTER2IP_IP}
+    #   controlPlane: true
+    #   installDiskSelector:
+    #     size: <= 1600GB
+    #   networkInterfaces:
+    #     # suffix is the adapter mac adres.
+    #     - interface: eth0
+    #       mtu: 1500
+    #       dhcp: true
+    #       vip:
+    #         ip: ${VIP}
+    #     - interface: eth1
+    #       mtu: 9000
+    #       addresses:
+    #         - ${NFS2IP}
+    #       routes: []
     - hostname: k8s-control-3
       ipAddress: ${MASTER3IP_IP}
       controlPlane: true
@@ -55,23 +72,6 @@ nodes:
           mtu: 9000
           addresses:
             - ${NFS3IP}
-          routes: []
-    - hostname: k8s-control-1
-      ipAddress: ${MASTER1IP_IP}
-      controlPlane: true
-      installDiskSelector:
-        size: <= 1600GB
-      networkInterfaces:
-        # suffix is the adapter mac adres.
-        - interface: eth0
-          mtu: 1500
-          dhcp: true
-          vip:
-            ip: ${VIP}
-        - interface: eth1
-          mtu: 9000
-          addresses:
-            - ${NFS1IP}
           routes: []
 controlPlane:
     patches:
