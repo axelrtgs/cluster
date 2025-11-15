@@ -7,6 +7,9 @@ machine:
     servers:
       - time.cloudflare.com
   kubelet:
+    nodeIP:
+      validSubnets:
+        - 172.16.0.0/24
     extraArgs:
       rotate-server-certificates: "true"
     extraConfig:
