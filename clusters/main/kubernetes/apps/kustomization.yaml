@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - authelia/ks.yaml
   - cloudflared/ks.yaml
-  - cloudflareddns/ks.yaml
   - external-service-truenas/ks.yaml
   - generic-device-plugin.yaml
   - grafana/ks.yaml
