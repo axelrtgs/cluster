@@ -61,7 +61,7 @@ spec:
                 type: emptyDir
             media:
                 enabled: true
-                existingClaim: media-nfs-pvc
+                existingClaim: data-media-nfs-pvc
                 targetSelector:
                     main:
                         main:
