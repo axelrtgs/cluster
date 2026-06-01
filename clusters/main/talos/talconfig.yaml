@@ -1,8 +1,8 @@
 clusterName: ${CLUSTERNAME}
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.13.3
+talosVersion: v1.12.8
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.36.1
+kubernetesVersion: v1.35.5
 endpoint: https://${VIP}:6443
 allowSchedulingOnControlPlanes: true
 additionalMachineCertSans:
@@ -22,42 +22,35 @@ patches:
     - '@./patches/all.yaml'
 nodes:
     # We would adivce to always stick to a "k8s-something-1" style naming scheme
-    # - hostname: k8s-control-1
-    #   ipAddress: ${MASTER1IP_IP}
-    #   controlPlane: true
-    #   installDiskSelector:
-    #     size: <= 1600GB
-    #   networkInterfaces:
-    #     # suffix is the adapter mac adres.
-    #     - interface: eth0
-    #       mtu: 1500
-    #       dhcp: true
-    #       vip:
-    #         ip: ${VIP}
-    #     - interface: eth1
-    #       mtu: 9000
-    #       addresses:
-    #         - ${NFS1IP}
-    #       routes: []
-    # - hostname: k8s-control-2
-    #   ipAddress: ${MASTER2IP_IP}
-    #   controlPlane: true
-    #   installDiskSelector:
-    #     size: <= 1600GB
-    #   networkInterfaces:
-    #     # suffix is the adapter mac adres.
-    #     - interface: eth0
-    #       mtu: 1500
-    #       dhcp: true
-    #       vip:
-    #         ip: ${VIP}
-    #     - interface: eth1
-    #       mtu: 9000
-    #       addresses:
-    #         - ${NFS2IP}
-    #       routes: []
-    - hostname: k8s-control-3
-      ipAddress: ${MASTER3IP_IP}
+    - hostname: k8s-control-1
+      ipAddress: ${MASTER1IP_IP}
+      controlPlane: true
+      nameservers:
+        - 1.1.1.1
+        - 8.8.8.8
+      installDiskSelector:
+        size: <= 1600GB
+      networkInterfaces:
+        # suffix is the adapter mac adres.
+        - interface: eth0
+          mtu: 1500
+          addresses:
+            - ${MASTER1IP_CIDR}
+          routes:
+            - network: 0.0.0.0/0
+              gateway: ${GATEWAY}
+          vip:
+            ip: ${VIP}
+        - interface: eth1
+          mtu: 9000
+          addresses:
+            - ${NFS1IP}
+          routes: []
+    - hostname: k8s-control-2
+      ipAddress: ${MASTER2IP_IP}
+      nameservers:
+        - 1.1.1.1
+        - 8.8.8.8
       controlPlane: true
       installDiskSelector:
         size: <= 1600GB
@@ -65,7 +58,35 @@ nodes:
         # suffix is the adapter mac adres.
         - interface: eth0
           mtu: 1500
-          dhcp: true
+          addresses:
+            - ${MASTER2IP_CIDR}
+          routes:
+            - network: 0.0.0.0/0
+              gateway: ${GATEWAY}
+          vip:
+            ip: ${VIP}
+        - interface: eth1
+          mtu: 9000
+          addresses:
+            - ${NFS2IP}
+          routes: []
+    - hostname: k8s-control-3
+      ipAddress: ${MASTER3IP_IP}
+      controlPlane: true
+      nameservers:
+        - 1.1.1.1
+        - 8.8.8.8
+      installDiskSelector:
+        size: <= 1600GB
+      networkInterfaces:
+        # suffix is the adapter mac adres.
+        - interface: eth0
+          mtu: 1500
+          addresses:
+            - ${MASTER3IP_CIDR}
+          routes:
+            - network: 0.0.0.0/0
+              gateway: ${GATEWAY}
           vip:
             ip: ${VIP}
         - interface: eth1
