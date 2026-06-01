@@ -4,7 +4,6 @@ metadata:
   name: helm-repos
   namespace: flux-system
 resources:
-  - bjw-s.yaml
   - cilium.yaml
   - cloudnative-pg.yaml
   - home-ops-mirror.yaml
@@ -14,6 +13,5 @@ resources:
   - node-feature-discovery.yaml
   - openebs.yaml
   - prometheus-community.yaml
-  - spegel.yaml
   - truecharts.yaml
 # more goes here!

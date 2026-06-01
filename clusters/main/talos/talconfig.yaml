@@ -1,8 +1,8 @@
 clusterName: ${CLUSTERNAME}
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.12.8
+talosVersion: v1.13.0
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.35.5
+kubernetesVersion: v1.36.1
 endpoint: https://${VIP}:6443
 allowSchedulingOnControlPlanes: true
 additionalMachineCertSans:
@@ -46,6 +46,8 @@ nodes:
           addresses:
             - ${NFS1IP}
           routes: []
+      patches:
+        - '@./patches/garbagecollection.yaml'
     - hostname: k8s-control-2
       ipAddress: ${MASTER2IP_IP}
       nameservers:
@@ -70,6 +72,8 @@ nodes:
           addresses:
             - ${NFS2IP}
           routes: []
+      patches:
+        - '@./patches/garbagecollection.yaml'
     - hostname: k8s-control-3
       ipAddress: ${MASTER3IP_IP}
       controlPlane: true
@@ -94,6 +98,8 @@ nodes:
           addresses:
             - ${NFS3IP}
           routes: []
+      patches:
+        - '@./patches/garbagecollection.yaml'
 controlPlane:
     patches:
         - '@./patches/controlplane.yaml'

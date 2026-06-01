@@ -26,6 +26,7 @@ spec:
   values:
     defaultSettings:
       defaultReplicaCount: "2"
+      # Overprovisioning might be needed when using volsync
       storageOverProvisioningPercentage: "100000"
       # v2DataEngine: true
       concurrentAutomaticEngineUpgradePerNodeLimit: "2"
@@ -33,6 +34,7 @@ spec:
       replicaAutoBalance: best-effort
       migratable: true
     persistence:
+      # Set to false to pick another CSI as default
       defaultClass: true
       defaultClassReplicaCount: "2"
       defaultDataLocality: best-effort
