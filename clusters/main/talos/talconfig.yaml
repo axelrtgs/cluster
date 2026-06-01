@@ -32,7 +32,8 @@ nodes:
       size: <= 1600GB
     networkInterfaces:
       # suffix is the adapter mac adres.
-      - interface: eth0
+      - deviceSelector:
+          hardwareAddr: "${MASTER1IP_HWADDR}"
         mtu: 1500
         addresses:
           - ${MASTER1IP_CIDR}
@@ -41,7 +42,8 @@ nodes:
             gateway: ${GATEWAY}
         vip:
           ip: ${VIP}
-      - interface: eth1
+      - deviceSelector:
+          hardwareAddr: "${NFS1IP_HWADDR}"
         mtu: 9000
         addresses:
           - ${NFS1IP}
@@ -55,6 +57,10 @@ controlPlane:
     - name: nvme_tcp
     - name: vfio_pci
     - name: uio_pci_generic
+    - name: nvidia
+    - name: nvidia_uvm
+    - name: nvidia_drm
+    - name: nvidia_modeset
   schematic:
     customization:
       extraKernelArgs:
@@ -64,6 +70,8 @@ controlPlane:
           - siderolabs/util-linux-tools
           - siderolabs/iscsi-tools
           - siderolabs/qemu-guest-agent
+          - siderolabs/nonfree-kmod-nvidia-lts
+          - siderolabs/nvidia-container-toolkit-lts
   machineFiles:
   - content: |
       [plugins."io.containerd.cri.v1.images"]
