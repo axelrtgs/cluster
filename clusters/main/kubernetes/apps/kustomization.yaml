@@ -12,5 +12,5 @@ resources:
   - scrypted/ks.yaml
   - teslamate/ks.yaml
   - nvidia-device-plugin/ks.yaml
-  # - nvidia-device-plugin/runtime-class.yaml
+  - nvidia-device-plugin/runtime-class.yaml
 
