@@ -11,4 +11,3 @@ resources:
   - media
   - scrypted/ks.yaml
   - teslamate/ks.yaml
-  - kubernetes-dashboard/ks.yaml
