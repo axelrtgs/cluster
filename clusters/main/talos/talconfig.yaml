@@ -25,6 +25,12 @@ nodes:
   - hostname: k8s-control-1
     ipAddress: ${MASTER1IP_IP}
     controlPlane: true
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/nonfree-kmod-nvidia-lts
+            - siderolabs/nvidia-container-toolkit-lts
     nameservers:
       - 1.1.1.1
       - 8.8.8.8
@@ -50,6 +56,7 @@ nodes:
         routes: []
     patches:
       - '@./patches/garbagecollection.yaml'
+      - '@./patches/nvidia.yaml'
 controlPlane:
   patches:
       - '@./patches/controlplane.yaml'
@@ -57,10 +64,6 @@ controlPlane:
     - name: nvme_tcp
     - name: vfio_pci
     - name: uio_pci_generic
-    - name: nvidia
-    - name: nvidia_uvm
-    - name: nvidia_drm
-    - name: nvidia_modeset
   schematic:
     customization:
       extraKernelArgs:
@@ -70,8 +73,6 @@ controlPlane:
           - siderolabs/util-linux-tools
           - siderolabs/iscsi-tools
           - siderolabs/qemu-guest-agent
-          - siderolabs/nonfree-kmod-nvidia-lts
-          - siderolabs/nvidia-container-toolkit-lts
   machineFiles:
   - content: |
       [plugins."io.containerd.cri.v1.images"]
