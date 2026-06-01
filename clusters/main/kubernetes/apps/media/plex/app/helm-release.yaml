@@ -107,4 +107,3 @@ spec:
                                 PLEX_CLAIM: ${PLEX_CLAIM}
                                 PLEX_PREFERENCE_GDM: GdmEnabled={{ ternary "0" "1" .Values.plex.disableGDM }}
                                 PLEX_PREFERENCE_SEC_CON: secureConnections={{ ternary "0" "1" .Values.plex.requireHTTPS }}
-                                NVIDIA_DRIVER_CAPABILITIES: video,compute,utility
