@@ -77,6 +77,7 @@ spec:
             limits:
                 cpu: 32000m
                 memory: 64Gi
+                nvidia.com/gpu: 1
             requests:
                 cpu: 2000m
                 memory: 8Gi
@@ -98,6 +99,7 @@ spec:
         workload:
             main:
                 podSpec:
+                    runtimeClassName: nvidia
                     containers:
                         main:
                             env:
@@ -105,3 +107,4 @@ spec:
                                 PLEX_CLAIM: ${PLEX_CLAIM}
                                 PLEX_PREFERENCE_GDM: GdmEnabled={{ ternary "0" "1" .Values.plex.disableGDM }}
                                 PLEX_PREFERENCE_SEC_CON: secureConnections={{ ternary "0" "1" .Values.plex.requireHTTPS }}
+                                NVIDIA_DRIVER_CAPABILITIES: video,compute,utility
