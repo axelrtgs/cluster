@@ -7,7 +7,6 @@ resources:
   - kometa/ks.yaml
   - media-nfs-pvc.yaml
   - data-media-nfs-pvc.yaml
-  - overseerr/ks.yaml
   - plex/ks.yaml
   - plex-certs-nfs-pvc.yaml
   - radarr/ks.yaml
