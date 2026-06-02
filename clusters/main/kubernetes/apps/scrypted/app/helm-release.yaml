@@ -71,28 +71,16 @@ spec:
         service:
             main:
                 enabled: true
-                loadBalancerIP: ${SCRYPTED_IP}
                 ports:
                     main:
                         enabled: true
                         port: 10611
                         protocol: tcp
                         targetPort: 10611
-                    mdns:
-                        enabled: true
-                        port: 5353
-                        protocol: udp
-                        targetPort: 5353
-                    homekit:
-                        enabled: true
-                        port: 36515
-                        protocol: tcp
-                        targetPort: 36515
-                type: LoadBalancer
+                type: ClusterIP
         workload:
             main:
                 podSpec:
-                    hostNetwork: true
                     containers:
                         main:
                             env:

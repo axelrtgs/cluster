@@ -72,28 +72,18 @@ spec:
         service:
             main:
                 enabled: true
-                loadBalancerIP: ${HOMEASSISTANT_IP}
                 ports:
                     main:
                         enabled: true
                         port: 8123
                         protocol: tcp
                         targetPort: 8123
-                    mdns:
-                        enabled: true
-                        port: 5353
-                        protocol: udp
-                        targetPort: 5353
-                    homekit:
-                        enabled: true
-                        port: 21063
-                        protocol: tcp
-                        targetPort: 21063
-                type: LoadBalancer
+                type: ClusterIP
         workload:
             main:
                 podSpec:
                     hostNetwork: true
+                    dnsPolicy: ClusterFirstWithHostNet
         persistence:
             config:
                 enabled: true
