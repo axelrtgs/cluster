@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: ipmi-tools
+    namespace: ipmi-tools
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: ipmi-tools
+            version: 10.3.0
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+
+    values:
+        TZ: America/Montreal
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                APP_IPMI_HOST: ${IPMI_HOST}
+                                APP_IPMI_USER: ${IPMI_USER}
+                                APP_IPMI_PASS: ${IPMI_PASS}
+        persistence:
+            data:
+                enabled: true
+                mountPath: /data

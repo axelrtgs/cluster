@@ -3,9 +3,10 @@ kind: Kustomization
 resources:
   - authelia/ks.yaml
   - cloudflared/ks.yaml
-  - external-service-truenas/ks.yaml
   - generic-device-plugin.yaml
   - grafana/ks.yaml
+  - home-assistant/ks.yaml
+  - ipmi-tools/ks.yaml
   - lldap/ks.yaml
   - mealie/ks.yaml
   - media
