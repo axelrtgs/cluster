@@ -4,7 +4,6 @@ resources:
   - namespace.yaml
   - bazarr/ks.yaml
   - downloads-nfs-pvc.yaml
-  - kometa/ks.yaml
   - media-nfs-pvc.yaml
   - data-media-nfs-pvc.yaml
   - plex/ks.yaml
