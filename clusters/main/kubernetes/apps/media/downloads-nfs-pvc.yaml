@@ -19,8 +19,10 @@ spec:
     - noatime
     - nodiratime
     - nolock
-    - rsize=131072
-    - wsize=131072
+    - nocto
+    - actimeo=60
+    - rsize=1048576
+    - wsize=1048576
     - timeo=600
     - retrans=2
   nfs:
