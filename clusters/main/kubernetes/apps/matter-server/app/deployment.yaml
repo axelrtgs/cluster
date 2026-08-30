@@ -24,6 +24,14 @@ spec:
       containers:
         - name: matter-server
           image: ghcr.io/matter-js/python-matter-server:stable
+          # Overriding args replaces the image CMD, so --storage-path must be repeated.
+          # --primary-interface is what the SDK uses to pick link-local for mDNS; left
+          # unset it logs "Using 'None' as primary interface" and fails to advertise.
+          args:
+            - --storage-path
+            - /data
+            - --primary-interface
+            - enp1s0
           securityContext:
             privileged: true
           ports:
