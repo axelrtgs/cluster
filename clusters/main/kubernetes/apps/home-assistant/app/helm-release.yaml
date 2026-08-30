@@ -52,10 +52,6 @@ spec:
                 accessKey: "${S3ID}"
                 secretKey: "${S3KEY}"
                 encrKey: "${S3ENCRKEY}"
-        homeassistant:
-            trusted_proxies:
-                - 172.17.0.0/16
-                - 172.18.0.0/16
         ingress:
             main:
                 enabled: true
