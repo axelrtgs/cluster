@@ -90,12 +90,12 @@ spec:
                     auth_enabled: true
                     auto_redirect: true
                     client_id: ${AUTHELIA_MEALIE_ID}
+                    client_secret: ${AUTHELIA_MEALIE_SECRET_PLAIN}
                     configuration_url: https://auth.${BASE_DOMAIN}/.well-known/openid-configuration
                     provider_name: OAuth
                     remember_me: true
                     signup_enabled: true
                     user_group: "users"
-                    OIDC_CLIENT_SECRET: ${AUTHELIA_MEALIE_SECRET_PLAIN}
                 openai:
                     OPENAI_API_KEY: ${OPENAI_API_KEY}
                 smtp:
