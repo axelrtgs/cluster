@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: mosquitto
+    namespace: mosquitto
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: mosquitto
+            version: 17.11.3
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+
+    values:
+        TZ: America/Montreal
+        # ClusterIP only, no ingress: TeslaMate and Home Assistant reach the broker
+        # in-cluster and nothing outside can. auth.enabled true only sets
+        # allow_anonymous false — the passwd file would still have to be supplied.
+        auth:
+            enabled: false
+        # Two separate keys: the top-level flag gates the 9001 listener in
+        # mosquitto.conf, service.websockets renders a Service for it. The chart
+        # defaults them false/true, which publishes a Service with no listener.
+        websockets:
+            enabled: false
+        service:
+            main:
+                enabled: true
+                type: ClusterIP
+                ports:
+                    main:
+                        enabled: true
+                        port: 1883
+                        protocol: tcp
+                        targetPort: 1883
+            websockets:
+                enabled: false
+        # No volsync: the only state here is retained messages and session data,
+        # which TeslaMate republishes on reconnect.
+        persistence:
+            data:
+                enabled: true
+                mountPath: /mosquitto/data
+                size: 1Gi

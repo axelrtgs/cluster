@@ -75,3 +75,6 @@ spec:
                         main:
                             env:
                                 ENCRYPTION_KEY: ${TESLAMATE_ENCRYPTION_KEY}
+                                MQTT_HOST: mosquitto.mosquitto.svc.cluster.local
+                                MQTT_HOME_ASSISTANT_DISCOVERY: "true"
+                                MQTT_HOME_ASSISTANT_DISCOVERY_URL: https://teslamate.${BASE_DOMAIN}
