@@ -27,6 +27,9 @@ spec:
     defaultSettings:
       # Increase to 3 for a multi-node cluster
       defaultReplicaCount: "1"
+      # always-allow lets a drain proceed while this node holds the last replica;
+      # required on a single-node cluster, where no replica can be moved elsewhere
+      nodeDrainPolicy: "always-allow"
       # Overprovisioning might be needed when using volsync
       storageOverProvisioningPercentage: "100000"
       # v2DataEngine: true
