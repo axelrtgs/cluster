@@ -50,7 +50,7 @@ spec:
             value: "6443"
           - name: KUBECONFIG
             value: /home/headlamp/.config/Headlamp/kubeconfigs/config
-        image: alpine/kubectl:1.37.0
+        image: alpine/kubectl:1.37.0@sha256:036b8cf863b64e4c4dc0ca34f8b30fa9a151e7ae27631acfd7dccdc8bac85e52
         name: create-kubeconfig
         securityContext:
           capabilities:
