@@ -65,6 +65,11 @@ spec:
       automount:
         enabled: false
       hostRoot: /sys/fs/cgroup
+    # Leave other CNI configs in /etc/cni/net.d alone. Required before Multus can
+    # be installed - with exclusive:true the agent deletes 00-multus.conf on every
+    # restart and the two fight over the CNI chain.
+    cni:
+      exclusive: false
     enableRuntimeDeviceDetection: true
     endpointRoutes:
       enabled: true

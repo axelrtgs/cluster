@@ -3,5 +3,8 @@
   "extends": [
     "config:recommended",
     "github>trueforge-org/renovate-config"
-  ]
+  ],
+  "kubernetes": {
+    "fileMatch": ["clusters/main/kubernetes/.+\\.ya?ml$"]
+  }
 }

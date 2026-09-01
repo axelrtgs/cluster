@@ -23,17 +23,25 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: matter-server
-          image: ghcr.io/matter-js/python-matter-server:stable
-          # Overriding args replaces the image CMD, so --storage-path must be repeated.
-          # --primary-interface is what the SDK uses to pick link-local for mDNS; left
-          # unset it logs "Using 'None' as primary interface" and fails to advertise.
+          image: ghcr.io/matter-js/matterjs-server:1.4.0@sha256:54232d0d3e7dff5a54759469d2753399270412b4c30c55b31750a4595e4cb236
+          # --primary-interface picks the interface used for link-local mDNS; left
+          # unset the server advertises on every host interface, of which this node
+          # has ~100 thanks to one Cilium veth per pod.
           args:
             - --storage-path
             - /data
             - --primary-interface
             - enp1s0
+          env:
+            - name: NODE_OPTIONS
+              value: --max-old-space-size=1536
+            - name: TZ
+              value: America/Montreal
+          # Image default user is 1000:1000, but /data was written by the Python
+          # server as root:root 0600 and the migration must be able to read it.
           securityContext:
-            privileged: true
+            runAsUser: 0
+            runAsGroup: 0
           ports:
             - name: websocket
               containerPort: 5580
@@ -44,14 +52,27 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 128Mi
+              memory: 256Mi
             limits:
-              memory: 512Mi
+              memory: 2Gi
+          # First boot converts the Python storage files to the matter.js format and
+          # re-interviews every node, so the startup budget is 5min, not 2.
+          startupProbe:
+            tcpSocket:
+              port: 5580
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            tcpSocket:
+              port: 5580
+            periodSeconds: 10
+            timeoutSeconds: 5
           livenessProbe:
             tcpSocket:
               port: 5580
-            initialDelaySeconds: 30
             periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
       volumes:
         - name: data
           persistentVolumeClaim:
