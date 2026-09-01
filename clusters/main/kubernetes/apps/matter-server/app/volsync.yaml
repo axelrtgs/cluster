@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: matter-server-data-restic
+  namespace: matter-server
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: s3:${S3URL}/${S3BUCKET}/matter-server/matter-server-data
+  RESTIC_PASSWORD: ${S3ENCRKEY}
+  AWS_ACCESS_KEY_ID: ${S3ID}
+  AWS_SECRET_ACCESS_KEY: ${S3KEY}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: matter-server-data-s3
+  namespace: matter-server
+spec:
+  sourcePVC: matter-server-data
+  trigger:
+    schedule: "0 */6 * * *"
+  restic:
+    repository: matter-server-data-restic
+    copyMethod: Snapshot
+    volumeSnapshotClassName: longhorn-snapshot-vsc
+    storageClassName: longhorn
+    cacheCapacity: 1Gi
+    pruneIntervalDays: 7
+    # /data is root-owned 0600; a non-root mover cannot read the fabric
+    # credentials and the backup silently captures nothing.
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+    retain:
+      daily: 14
+      weekly: 8
+      monthly: 12
