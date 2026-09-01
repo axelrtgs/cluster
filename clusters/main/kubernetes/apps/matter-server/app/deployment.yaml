@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: matter-server
 spec:
   replicas: 1
-  # hostNetwork + RWO volume: never run two at once, and never two on different nodes
+  # RWO volume and a single macvlan address: never run two at once
   strategy:
     type: Recreate
   selector:
@@ -17,21 +17,22 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: matter-server
+      annotations:
+        # net1 is a macvlan child of enp1s0, giving Matter the LAN presence its
+        # mDNS and IPv6 link-local discovery need. eth0 stays on the cluster
+        # network so the Service still reaches 5580.
+        k8s.v1.cni.cncf.io/networks: multus-config/lan
     spec:
-      # Matter discovery is mDNS + IPv6 link-local, neither of which survives NAT
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: matter-server
           image: ghcr.io/matter-js/matterjs-server:1.4.0@sha256:54232d0d3e7dff5a54759469d2753399270412b4c30c55b31750a4595e4cb236
-          # --primary-interface picks the interface used for link-local mDNS; left
-          # unset the server advertises on every host interface, of which this node
-          # has ~100 thanks to one Cilium veth per pod.
+          # --primary-interface must be net1, not eth0: eth0 is the cluster network
+          # and cannot reach Matter devices or carry mDNS.
           args:
             - --storage-path
             - /data
             - --primary-interface
-            - enp1s0
+            - net1
           env:
             - name: NODE_OPTIONS
               value: --max-old-space-size=1536
