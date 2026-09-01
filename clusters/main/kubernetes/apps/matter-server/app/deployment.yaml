@@ -47,11 +47,24 @@ spec:
               memory: 128Mi
             limits:
               memory: 512Mi
+          # Startup pulls PAA certs from DCL and GitHub before binding 5580; a slow
+          # fetch must not read as a liveness failure and restart the SDK.
+          startupProbe:
+            tcpSocket:
+              port: 5580
+            periodSeconds: 5
+            failureThreshold: 24
+          readinessProbe:
+            tcpSocket:
+              port: 5580
+            periodSeconds: 10
+            timeoutSeconds: 5
           livenessProbe:
             tcpSocket:
               port: 5580
-            initialDelaySeconds: 30
             periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
       volumes:
         - name: data
           persistentVolumeClaim:
