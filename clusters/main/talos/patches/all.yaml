@@ -104,3 +104,4 @@ machine:
           - https://quay.io
           - https://oci.trueforge.org
 # No DockerHub credentials provided
+    
