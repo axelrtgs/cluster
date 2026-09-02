@@ -51,13 +51,6 @@ machine:
     net.core.wmem_max: "33554432"          # 32 MB
     net.ipv4.tcp_window_scaling: 1         # 10Gb/s
     vm.nr_hugepages: 1024                  # PostgreSQL
-    # Matter/Thread: the Apple border router advertises the Thread ULA prefix as an
-    # RFC 4191 Route Information Option. Linux ignores RIOs entirely unless
-    # accept_ra_rt_info_max_plen is >= the advertised prefix length; the default of 0
-    # meant no route to fd61:e57d:b4df::/64 and every commission failed with
-    # "Network is unreachable". accept_ra is already 2 by Talos default.
-    net.ipv6.conf.default.accept_ra_rt_info_max_plen: "64"
-    net.ipv6.conf.enp1s0.accept_ra_rt_info_max_plen: "64"
   registries:
     mirrors:
       cgr.dev:

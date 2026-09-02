@@ -13,14 +13,17 @@ spec:
       "plugins": [
         {
           "type": "macvlan",
-          "master": "enp1s0",
+          "master": "${MACVLAN_MASTER}",
           "mode": "bridge",
           "ipam": {
             "type": "host-local",
             "subnet": "${MACVLAN_SUBNET}",
             "rangeStart": "${MACVLAN_RANGE_START}",
             "rangeEnd": "${MACVLAN_RANGE_END}",
-            "gateway": "${GATEWAY}"
+            "gateway": "${MACVLAN_GATEWAY}",
+            "routes": [
+              { "dst": "${LAN_SUBNET}", "gw": "${MACVLAN_GATEWAY}" }
+            ]
           }
         },
         {

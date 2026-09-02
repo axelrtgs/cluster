@@ -57,6 +57,13 @@ nodes:
         addresses:
           - ${NFS1IP}
         routes: []
+      # Multus macvlan parent. Must stay addressless: a macvlan child cannot reach
+      # an address that lives on its own parent interface.
+      - deviceSelector:
+          hardwareAddr: "${MACVLAN_HWADDR}"
+        mtu: 1500
+        dhcp: false
+        routes: []
     patches:
       - '@./patches/garbagecollection.yaml'
       - '@./patches/nvidia.yaml'

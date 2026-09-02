@@ -23,11 +23,12 @@ spec:
       retries: 3
       remediateLastFailure: true
   values:
-    # Keep in step with the node's Talos version; this image is where the
-    # reference CNI binaries below are copied from.
+    # Must stay on the same minor as the node's Talos release; this image is where
+    # the reference CNI binaries below are copied from. Renovate is held to v1.13.x
+    # in .github/renovate.json5 - widen that range when Talos itself is upgraded.
     talosCniImage:
       repository: ghcr.io/siderolabs/cni
-      tag: v1.14.0@sha256:717328255ca6969bc225d7788ebc05c95ed3d4179dd38a804e438bbd38f14d2e
+      tag: v1.13.0@sha256:0dc7609b62c2ab8f01d1adc7ea4b20a1b409d5cf895a94e9234e0eb91364da0c
     multus:
       integrations:
         talos:

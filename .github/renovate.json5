@@ -6,5 +6,21 @@
   ],
   "kubernetes": {
     "fileMatch": ["clusters/main/kubernetes/.+\\.ya?ml$"]
-  }
+  },
+  "packageRules": [
+    {
+      "description": "siderolabs/cni supplies the reference CNI binaries copied into /opt/cni/bin, so it must track the Talos minor running on the node rather than the latest release. Widen this range when Talos is upgraded past v1.13.x.",
+      "matchPackageNames": ["ghcr.io/siderolabs/cni"],
+      "allowedVersions": "<1.14.0"
+    },
+    {
+      "description": "Keep the Talos-versioned images in one PR so the CNI image is reviewed alongside the Talos upgrade that gates it.",
+      "matchPackageNames": [
+        "ghcr.io/siderolabs/cni",
+        "ghcr.io/siderolabs/installer",
+        "ghcr.io/siderolabs/kubelet"
+      ],
+      "groupName": "talos"
+    }
+  ]
 }

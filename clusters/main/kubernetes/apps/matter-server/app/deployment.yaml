@@ -18,9 +18,9 @@ spec:
       labels:
         app.kubernetes.io/name: matter-server
       annotations:
-        # net1 is a macvlan child of enp1s0, giving Matter the LAN presence its
-        # mDNS and IPv6 link-local discovery need. eth0 stays on the cluster
-        # network so the Service still reaches 5580.
+        # net1 is a macvlan child of the dedicated LAN NIC, giving Matter the LAN
+        # presence its mDNS and IPv6 link-local discovery need. eth0 stays on the
+        # cluster network so the Service still reaches 5580.
         k8s.v1.cni.cncf.io/networks: multus-config/lan
     spec:
       containers:
