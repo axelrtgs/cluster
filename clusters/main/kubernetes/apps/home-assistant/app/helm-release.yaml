@@ -27,6 +27,23 @@ spec:
                         - op: add
                           path: /spec/enablePDB
                           value: false
+                  # The chart exposes no pod-annotation value, so the Multus
+                  # attachment has to be patched in after rendering.
+                  - target:
+                        group: apps
+                        version: v1
+                        kind: Deployment
+                        name: home-assistant
+                    patch: |
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                            name: home-assistant
+                        spec:
+                            template:
+                                metadata:
+                                    annotations:
+                                        k8s.v1.cni.cncf.io/networks: multus-config/lan
 
     values:
         TZ: America/Montreal
@@ -91,11 +108,6 @@ spec:
                         protocol: tcp
                         targetPort: 8123
                 type: ClusterIP
-        workload:
-            main:
-                podSpec:
-                    hostNetwork: true
-                    dnsPolicy: ClusterFirstWithHostNet
         persistence:
             config:
                 enabled: true

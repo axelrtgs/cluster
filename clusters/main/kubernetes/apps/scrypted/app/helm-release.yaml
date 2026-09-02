@@ -29,6 +29,27 @@ spec:
     uninstall:
       keepHistory: false
 
+    postRenderers:
+        - kustomize:
+              patches:
+                  # The chart exposes no pod-annotation value, so the Multus
+                  # attachment has to be patched in after rendering.
+                  - target:
+                        group: apps
+                        version: v1
+                        kind: Deployment
+                        name: scrypted
+                    patch: |
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                            name: scrypted
+                        spec:
+                            template:
+                                metadata:
+                                    annotations:
+                                        k8s.v1.cni.cncf.io/networks: multus-config/lan
+
     values:
         image:
           tag: v0.142.7-noble-full@sha256:e07520cb9cd4be246a5073435ebea84970719089a285efc50f9b613590cde055

@@ -19,11 +19,7 @@ spec:
             "type": "host-local",
             "subnet": "${MACVLAN_SUBNET}",
             "rangeStart": "${MACVLAN_RANGE_START}",
-            "rangeEnd": "${MACVLAN_RANGE_END}",
-            "gateway": "${MACVLAN_GATEWAY}",
-            "routes": [
-              { "dst": "${LAN_SUBNET}", "gw": "${MACVLAN_GATEWAY}" }
-            ]
+            "rangeEnd": "${MACVLAN_RANGE_END}"
           }
         },
         {
