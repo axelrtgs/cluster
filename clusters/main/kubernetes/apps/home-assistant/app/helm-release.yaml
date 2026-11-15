@@ -52,7 +52,6 @@ spec:
                 backups:
                     credentials: s3
                     enabled: true
-                    retentionPolicy: ""
                     revision: "1"
                 cluster:
                     instances: 2
@@ -69,7 +68,6 @@ spec:
                 pooler:
                     enabled: false
                 recovery:
-                    enabled: true
                     revision: ""
                     credentials: s3
                 user: home-assistant

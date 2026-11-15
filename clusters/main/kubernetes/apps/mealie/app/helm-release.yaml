@@ -35,7 +35,6 @@ spec:
                 backups:
                     credentials: s3
                     enabled: true
-                    retentionPolicy: ""
                     revision: "2"
                 cluster:
                     instances: 2
@@ -52,7 +51,6 @@ spec:
                 pooler:
                     enabled: false
                 recovery:
-                    enabled: true
                     method: backup
                     backupName: mealie-cnpg-main-sched-backup-daily-backup-20260613000000
                     credentials: s3

@@ -21,6 +21,22 @@ spec:
   upgrade:
     remediation:
       retries: 3
+  postRenderers:
+    - kustomize:
+        patches:
+          # hostNetwork + fixed webhook port 19443 on a single node: a surge pod can
+          # never schedule beside the old one, so RollingUpdate deadlocks every upgrade.
+          # The chart exposes no strategy value.
+          - target:
+              group: apps
+              version: v1
+              kind: Deployment
+              name: metallb-frr-k8s-statuscleaner
+            patch: |
+              - op: add
+                path: /spec/strategy
+                value:
+                  type: Recreate
   values:
     speaker:
       ignoreExcludeLB: true
