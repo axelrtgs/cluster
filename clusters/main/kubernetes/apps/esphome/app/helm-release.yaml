@@ -87,9 +87,10 @@ spec:
                         enabled: true
                       type: restic
             # PlatformIO toolchains: ~1-2 GB per target platform, re-downloaded if lost.
+            # ESPHome keeps its ESP-IDF toolchain under /config/.cache, which needs several GB.
             cache:
                 enabled: true
-                mountPath: /cache
+                mountPath: /config/.cache
                 size: 10Gi
             build:
                 enabled: true
