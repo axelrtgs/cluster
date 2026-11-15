@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.zinn.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: esphome
+    namespace: esphome
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: esphome
+            version: 26.2.5
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+
+    postRenderers:
+        - kustomize:
+              patches:
+                  # The chart exposes no pod-annotation value, so the Multus
+                  # attachment has to be patched in after rendering. The LAN leg
+                  # gives the dashboard mDNS, so device status and .local OTA work.
+                  - target:
+                        group: apps
+                        version: v1
+                        kind: Deployment
+                        name: esphome
+                    patch: |
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                            name: esphome
+                        spec:
+                            template:
+                                metadata:
+                                    annotations:
+                                        k8s.v1.cni.cncf.io/networks: multus-config/lan
+
+    values:
+        TZ: America/Montreal
+        credentials:
+            s3:
+                type: s3
+                url: "${S3URL}"
+                bucket: "${S3BUCKET}"
+                accessKey: "${S3ID}"
+                secretKey: "${S3KEY}"
+                encrKey: "${S3ENCRKEY}"
+        # LAN-only and unauthenticated: anyone who can reach it can flash devices.
+        # HTTPS is required for the browser's Web Serial first flash.
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                hosts:
+                    - host: esphome.${BASE_DOMAIN}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+        service:
+            main:
+                enabled: true
+                type: ClusterIP
+                ports:
+                    main:
+                        enabled: true
+                        port: 6052
+                        protocol: tcp
+                        targetPort: 6052
+        persistence:
+            config:
+                enabled: true
+                mountPath: /config
+                size: 1Gi
+                volsync:
+                    - credentials: s3
+                      dest:
+                        enabled: true
+                      name: s3
+                      src:
+                        enabled: true
+                      type: restic
+            # PlatformIO toolchains: ~1-2 GB per target platform, re-downloaded if lost.
+            cache:
+                enabled: true
+                mountPath: /cache
+                size: 10Gi
+            build:
+                enabled: true
+                mountPath: /build
+                size: 5Gi

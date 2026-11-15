@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - authelia/ks.yaml
   - cloudflared/ks.yaml
+  - esphome/ks.yaml
   - generic-device-plugin.yaml
   - grafana/ks.yaml
   - home-assistant/ks.yaml
