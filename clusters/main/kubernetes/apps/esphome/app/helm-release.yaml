@@ -48,12 +48,12 @@ spec:
                 accessKey: "${S3ID}"
                 secretKey: "${S3KEY}"
                 encrKey: "${S3ENCRKEY}"
-        # LAN-only and unauthenticated: anyone who can reach it can flash devices.
-        # HTTPS is required for the browser's Web Serial first flash.
+        # No app-level auth: the dashboard can flash any device, so it relies on
+        # Cloudflare Access in front of nginx-external.
         ingress:
             main:
                 enabled: true
-                ingressClassName: internal
+                ingressClassName: external
                 hosts:
                     - host: esphome.${BASE_DOMAIN}
                       paths:
